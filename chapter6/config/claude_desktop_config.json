@@ -1,0 +1,22 @@
+{
+    "mcpServers": {  
+        "filesystem": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/user/documents"],
+            "description": "파일 시스템 접근을 제공하는 MCP 서버"
+        },
+        "github": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-github"],
+            "env": {
+                "GITHUB_TOKEN": "your_github_token"
+            },
+            "description": "깃허브 저장소 접근 및 관리"
+        },
+        "postgres": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://localhost/mydb"],
+            "description": "PostgreSQL 데이터베이스 접근"
+        }
+    }
+}
