@@ -2,7 +2,7 @@
 
 "AI 에이전트" 책의 예제 코드 리포지토리입니다.
 
-## 📚 챕터별 구성
+##  챕터별 구성
 
 ### [Chapter 2: LLM 기본 원리와 API 활용](./chapter2)
 AI 에이전트의 핵심인 LLM(Large Language Model) 이해
