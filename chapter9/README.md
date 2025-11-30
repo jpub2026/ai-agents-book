@@ -2,7 +2,7 @@
 
 RAG, 다국어 처리, 프롬프트 최적화, 엣지 배포 등 에이전트 시스템의 고급 기법을 다루는 예제입니다.
 
-## 📁 프로젝트 구조
+## 프로젝트 구조
 
 ```
 chapter9/
@@ -53,7 +53,7 @@ chapter9/
         └── system.py
 ```
 
-## 🎯 주요 개념
+## 주요 개념
 
 ### 1. RAG (Retrieval-Augmented Generation)
 검색을 통해 관련 문서를 찾아 더 정확한 답변 생성
@@ -67,9 +67,9 @@ chapter9/
 ### 4. 엣지 배포
 네트워크 제약이 있는 환경에서 로컬 모델 실행
 
-## 📚 모듈별 상세 설명
+## 모듈별 상세 설명
 
-## 🔍 1. RAG (검색 증강 생성)
+## 1. RAG (검색 증강 생성)
 
 문서 검색과 생성 AI를 결합하여 더 정확하고 근거 있는 답변 제공
 
@@ -113,7 +113,7 @@ class RAGAgent:
 ### `models.py` - 데이터 모델
 RAG 관련 데이터 구조 정의
 
-## 🌍 2. 다국어 처리
+## 2. 다국어 처리
 
 한국어, 영어, 일본어 등 다양한 언어 지원
 
@@ -161,7 +161,7 @@ class MultilingualPipeline:
 - 경어 처리
 - 문자 변환
 
-## ⚡ 3. 성능 최적화
+## 3. 성능 최적화
 
 ### `chain.py` - 최적화된 체인
 ```python
@@ -225,7 +225,7 @@ class PromptOptimizer:
 #### `cleaning.py` - 프롬프트 정제
 불필요한 요소 제거
 
-## 🖥️ 4. 엣지 환경 배포
+## 4. 엣지 환경 배포
 
 ### Ollama 통합
 
@@ -288,7 +288,7 @@ class EdgeAdaptiveSystem:
 #### `adaptive/selection.py`
 모델 선택 로직
 
-## 🚀 사용 방법
+## 사용 방법
 
 ### 1. RAG 시스템
 
@@ -390,7 +390,7 @@ cd edge/adaptive
 python system.py
 ```
 
-## 💡 실습 시나리오
+## 실습 시나리오
 
 ### 시나리오 1: RAG 시스템 구축
 1. 기술 문서 수집
@@ -416,7 +416,7 @@ python system.py
 3. 오프라인 모드 테스트
 4. 적응형 최적화 확인
 
-## 🔧 커스터마이징
+## 커스터마이징
 
 ### RAG 검색 개선
 ```python
@@ -445,7 +445,7 @@ cache = MultilevelCache(
 )
 ```
 
-## 📊 성능 비교
+## 성능 비교
 
 ### 캐싱 효과
 - 캐시 없음: ~2000ms
@@ -463,7 +463,7 @@ cache = MultilevelCache(
 - Ollama 로컬: 100-300ms
 - GGUF 양자화: 50-150ms
 
-## 🐛 트러블슈팅
+## 트러블슈팅
 
 ### RAG 검색 정확도 낮음
 - 청크 크기 조정 (`chunk_size`, `overlap`)
@@ -489,14 +489,14 @@ ollama list
 systemctl restart ollama
 ```
 
-## 🔗 관련 챕터
+## 관련 챕터
 
 - Chapter 5: 멀티 에이전트 협업
 - Chapter 6: MCP 통합
 - Chapter 7: MCP 서버/클라이언트
 - Chapter 8: 프로덕션 배포
 
-## 📝 체크리스트
+## 체크리스트
 
 ### RAG 구축
 - [ ] 문서 수집 완료
@@ -519,7 +519,7 @@ systemctl restart ollama
 - [ ] 오프라인 모드 테스트
 - [ ] 디바이스 적응형 동작 확인
 
-## 🎓 심화 학습 주제
+## 심화 학습 주제
 
 이 챕터의 개념을 더 깊이 탐구하고 싶다면:
 
