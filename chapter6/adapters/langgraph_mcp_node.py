@@ -1,5 +1,5 @@
-from langgraph.graph import Graph
-from typing import TypedDict, Annotated, Sequence
+from langgraph.graph import StateGraph, END
+from typing import TypedDict, Annotated, Sequence, Dict, Any
 import operator
 
 class MCPNode:
@@ -41,10 +41,16 @@ class MCPNode:
         # 실제 구현에서는 subprocess나 websocket 사용
         return {"jsonrpc": "2.0", "result": {"status": "success"}, "id": 1}
 
+class WorkflowState(TypedDict):
+    """워크플로우 상태 정의"""
+    current_task: str
+    request_id: int
+    results: list
+
 def create_mcp_workflow():
     """MCP 노드들을 사용하는 LangGraph 워크플로 생성"""
-    workflow = Graph()
-    
+    workflow = StateGraph(WorkflowState)
+
     # MCP 노드 생성
     file_node = MCPNode(
         node_name="file_handler",
@@ -53,7 +59,7 @@ def create_mcp_workflow():
             "args": ["-y", "@modelcontextprotocol/server-filesystem"]
         }
     )
-    
+
     db_node = MCPNode(
         node_name="database_handler",
         mcp_server_config={
@@ -61,13 +67,14 @@ def create_mcp_workflow():
             "args": ["-y", "@modelcontextprotocol/server-sqlite"]
         }
     )
-    
+
     # 노드를 그래프에 추가
     workflow.add_node("read_files", file_node.execute)
     workflow.add_node("query_database", db_node.execute)
-    
+
     # 실행 순서 정의
-    workflow.add_edge("read_files", "query_database")
     workflow.set_entry_point("read_files")
-    
-    return workflow
+    workflow.add_edge("read_files", "query_database")
+    workflow.add_edge("query_database", END)
+
+    return workflow.compile()

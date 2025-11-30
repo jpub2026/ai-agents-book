@@ -1,7 +1,9 @@
-from langchain.agents import initialize_agent, AgentType, Tool
+from langchain.agents import AgentType, create_react_agent, AgentExecutor
+from langchain_core.tools import Tool
 from langchain.memory import ConversationBufferMemory
-from langchain.llms import OpenAI
-from langchain.tools import DuckDuckGoSearchRun
+from langchain_openai import OpenAI
+from langchain_community.tools import DuckDuckGoSearchRun
+from langchain_core.prompts import PromptTemplate
 import os
 
 class LangChainAgent:
@@ -36,10 +38,32 @@ class LangChainAgent:
         self.tools = self._setup_tools()
 
         # 에이전트 초기화 - 우리의 Agent 클래스 전체를 대체!
-        self.agent = initialize_agent(
+        # LangChain 최신 버전에서는 create_react_agent + AgentExecutor 사용
+        prompt = PromptTemplate.from_template(
+            """Answer the following questions as best you can. You have access to the following tools:
+
+{tools}
+
+Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+Begin!
+
+Question: {input}
+Thought:{agent_scratchpad}"""
+        )
+        agent = create_react_agent(self.llm, self.tools, prompt)
+        self.agent = AgentExecutor(
+            agent=agent,
             tools=self.tools,
-            llm=self.llm,
-            agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION,
             memory=self.memory,
             verbose=True  # 실행 과정을 출력
         )
@@ -70,5 +94,5 @@ class LangChainAgent:
         단 한 줄로 처리됩니다!
         """
         # 이 한 줄이 우리의 전체 process_request 메서드를 대체합니다
-        response = self.agent.run(user_request)
-        return response
+        response = self.agent.invoke({"input": user_request})
+        return response.get("output", "")

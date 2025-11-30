@@ -1,11 +1,11 @@
 # /mcp_client/workflow.py
 from langgraph.graph import StateGraph, END
 from dataclasses import dataclass, field
-from typing import List, Dict, Optional, TYPE_CHECKING
+from typing import List, Dict, Optional, Any
 import uuid
 
-if TYPE_CHECKING:
-    from client import MCPClient
+# MCPClient 타입 힌트용 (실제 import는 사용 시점에)
+MCPClient = Any  # 타입 힌트 호환성
 
 @dataclass
 class WorkflowState:
