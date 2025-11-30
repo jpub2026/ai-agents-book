@@ -1,3 +1,7 @@
+import sqlite3
+import json
+from typing import Optional
+
 def cache_response(
     self,
     query: str,

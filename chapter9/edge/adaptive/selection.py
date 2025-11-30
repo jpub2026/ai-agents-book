@@ -1,3 +1,5 @@
+from typing import Dict, Any
+
 def _check_gpu(self) -> bool:
     """CUDA GPU 사용 가능 여부를 확인합니다."""
     try:

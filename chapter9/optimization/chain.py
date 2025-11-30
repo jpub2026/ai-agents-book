@@ -1,3 +1,15 @@
+import time
+from typing import Dict, Any
+from dataclasses import dataclass
+
+@dataclass
+class PerformanceMetrics:
+    """성능 측정 데이터"""
+    operation: str
+    start_time: float
+    end_time: float
+    cache_hit: bool = False
+
 class OptimizedChain:
     """성능 최적화된 처리 체인입니다."""
     

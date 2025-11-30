@@ -1,3 +1,8 @@
+import sqlite3
+import pickle
+from typing import Optional, List, Dict, Any
+import numpy as np
+
 def store_document(
     self,
     doc_id: str,

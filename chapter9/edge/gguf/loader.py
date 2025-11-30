@@ -1,3 +1,13 @@
+import time
+from typing import Dict
+from pathlib import Path
+
+# llama_cpp는 선택적 의존성
+try:
+    from llama_cpp import Llama
+except ImportError:
+    Llama = None
+
 def _load_model(self):
     """GGUF 모델을 메모리에 로드합니다."""
     if not self.model_path.exists():

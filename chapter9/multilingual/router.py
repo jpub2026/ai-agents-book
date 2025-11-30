@@ -1,3 +1,21 @@
+from typing import Dict
+from dataclasses import dataclass
+
+# langdetect는 선택적 의존성
+try:
+    from langdetect import detect
+except ImportError:
+    def detect(text):
+        return 'en'
+
+@dataclass
+class LanguageConfig:
+    """언어 설정을 담는 데이터 클래스"""
+    max_response_length: int = 2000
+    ko_style: str = "공손하고 친절한 말투"
+    en_style: str = "professional and helpful"
+    ja_style: str = "丁寧で親切な口調"
+
 class LanguageRouter:
     """언어를 감지하고 적절한 템플릿으로 라우팅하는 관리자입니다."""
     

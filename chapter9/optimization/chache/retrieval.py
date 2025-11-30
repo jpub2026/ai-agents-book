@@ -1,3 +1,7 @@
+import hashlib
+from typing import Optional, Any
+from datetime import datetime
+
 def get(self, key: str) -> Optional[Any]:
     """캐시에서 값을 조회하고 통계를 업데이트합니다."""
     hashed_key = self._hash_key(key)

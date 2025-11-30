@@ -1,3 +1,7 @@
+import sqlite3
+from pathlib import Path
+from typing import Dict, Any
+
 def get_statistics(self) -> Dict[str, Any]:
     """오프라인 저장소의 통계를 반환합니다."""
     conn = sqlite3.connect(self.db_path)

@@ -1,3 +1,5 @@
+from typing import Optional
+
 async def answer(
     self, 
     query: str,

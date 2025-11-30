@@ -4,11 +4,11 @@ import json
 import time
 
 # 3.2절에서 구현한 구성요소들을 import
-# 각 구성요소는 독립적으로 개발되었지만, 
+# 각 구성요소는 독립적으로 개발되었지만,
 # 이제 하나의 시스템으로 통합됩니다
 import sys
 sys.path.append('../core')      # Planner가 있는 경로
-sys.path.append('../memory')     # MemorySystem이 있는 경로  
+sys.path.append('../memory')     # MemorySystem이 있는 경로
 sys.path.append('../tools')      # ToolManager가 있는 경로
 
 from planner import Planner          # 코드 3-1: 계획 수립

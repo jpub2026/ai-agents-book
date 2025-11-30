@@ -1,3 +1,6 @@
+from typing import Dict, Any
+from pathlib import Path
+
 def get_runtime_config(self) -> Dict[str, Any]:
     """시스템의 전체 런타임 구성을 반환합니다."""
     model_path = self.model_dir / self.model_config["model_file"]

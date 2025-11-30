@@ -1,3 +1,19 @@
+from typing import Dict, Any
+from router import LanguageRouter, LanguageConfig
+
+# 언어별 프로세서 (예시 구현)
+class KoreanProcessor:
+    def preprocess(self, text): return text.strip()
+    def postprocess(self, text): return text
+
+class EnglishProcessor:
+    def preprocess(self, text): return text.strip()
+    def postprocess(self, text): return text
+
+class JapaneseProcessor:
+    def preprocess(self, text): return text.strip()
+    def postprocess(self, text): return text
+
 class MultilingualPipeline:
     """다국어 처리를 위한 통합 파이프라인입니다."""
     

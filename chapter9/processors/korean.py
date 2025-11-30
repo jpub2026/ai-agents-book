@@ -1,3 +1,16 @@
+import re
+from abc import ABC, abstractmethod
+
+class LanguageProcessor(ABC):
+    """언어 처리기의 기본 클래스"""
+    @abstractmethod
+    def preprocess(self, text: str) -> str:
+        pass
+
+    @abstractmethod
+    def postprocess(self, text: str) -> str:
+        pass
+
 class KoreanProcessor(LanguageProcessor):
     """한국어 텍스트의 전처리와 후처리를 담당합니다."""
     

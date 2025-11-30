@@ -1,3 +1,14 @@
+from typing import List
+from dataclasses import dataclass, field
+
+@dataclass
+class Document:
+    """RAG에서 사용하는 문서 클래스"""
+    id: str
+    title: str
+    content: str
+    metadata: dict = field(default_factory=dict)
+
 def add_documents(self, documents: List[Document]):
     """문서를 추가하고 검색 가능하도록 인덱싱합니다."""
     chunks = []

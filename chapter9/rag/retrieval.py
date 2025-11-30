@@ -1,3 +1,8 @@
+from typing import List, Tuple
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+from indexing import Document
+
 async def retrieve(
     self, 
     query: str, 

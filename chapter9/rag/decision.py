@@ -1,3 +1,5 @@
+from typing import List
+
 def _should_use_rag(self, query: str) -> bool:
     """쿼리를 분석하여 RAG 사용 여부를 판단합니다."""
     rag_keywords = [

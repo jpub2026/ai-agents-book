@@ -1,3 +1,6 @@
+import re
+from korean import LanguageProcessor
+
 class EnglishProcessor(LanguageProcessor):
     """영어 텍스트의 전처리와 후처리를 담당합니다."""
     
