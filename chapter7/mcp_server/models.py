@@ -1,22 +1,22 @@
 # /mcp_server/models.py
-from pydantic import BaseModel, Field, validator  # ❶
-from typing import Dict, List, Any, Optional  # ❷
+from pydantic import BaseModel, Field, model_validator  # ❶
+from typing import Dict, List, Any, Optional, Literal  # ❷
 from datetime import datetime
 
 class MCPRequest(BaseModel):
     """MCP 요청 모델 - JSON-RPC 2.0 표준 준수"""
-    
-    jsonrpc: str = Field(default="2.0", const=True)  # ❶
+
+    jsonrpc: Literal["2.0"] = "2.0"  # ❶
     method: str = Field(..., description="호출할 메서드명")  # ❷
     params: Optional[Dict[str, Any]] = Field(
-        default={}, 
+        default={},
         description="메서드에 전달할 매개변수"
     )  # ❸
     id: Optional[str] = Field(
-        default=None, 
+        default=None,
         description="요청 식별자 (None이면 알림)"
     )  # ❹
-    
+
     class Config:
         json_schema_extra = {
             "example": {
@@ -32,29 +32,28 @@ class MCPRequest(BaseModel):
 
 class MCPResponse(BaseModel):
     """MCP 응답 모델 - 성공 시 result, 실패 시 error 포함"""
-    
-    jsonrpc: str = Field(default="2.0", const=True)
+
+    jsonrpc: Literal["2.0"] = "2.0"
     id: Optional[str] = None
     result: Optional[Any] = None  # ❶
     error: Optional[Dict[str, Any]] = None  # ❷
-    
-    @validator('error', always=True)
-    def check_result_or_error(cls, error, values):  # ❸
+
+    @model_validator(mode='after')
+    def check_result_or_error(self):  # ❸
         """result와 error는 상호 배타적"""
-        result = values.get('result')
-        if result is not None and error is not None:
+        if self.result is not None and self.error is not None:
             raise ValueError('result와 error는 동시에 존재할 수 없음')
-        if result is None and error is None:
+        if self.result is None and self.error is None:
             raise ValueError('result 또는 error 중 하나는 반드시 존재해야 함')
-        return error
-    
+        return self
+
     class Config:
         json_schema_extra = {
             "examples": [
                 {
                     "jsonrpc": "2.0",
                     "id": "req-001",
-                    "result": {"success": True, "data": {...}}
+                    "result": {"success": True, "data": {}}
                 },
                 {
                     "jsonrpc": "2.0",
