@@ -60,7 +60,7 @@ Docker 기반 에이전트 배포와 운영
 - 다국어 지원
 - 다단계 캐싱 및 체인 최적화
 
-## 🚀 시작하기
+## 시작하기
 
 각 챕터 폴더의 README.md에서 상세한 설명과 실행 방법을 확인하세요.
 
@@ -83,7 +83,7 @@ cd chapter5/book_examples
 python 01_basic_collaboration.py
 ```
 
-## 📋 공통 요구사항
+## 공통 요구사항
 
 ### 기본 패키지
 ```bash
@@ -114,6 +114,3 @@ export OPENAI_API_KEY='your-api-key'
 
 챕터별 추가 요구사항은 각 폴더의 README를 참조하세요.
 
-## 📖 출처
-
-jpub2026/ai-agents-book 리포지토리 기반
