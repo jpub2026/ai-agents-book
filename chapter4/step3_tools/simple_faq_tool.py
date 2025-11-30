@@ -14,29 +14,26 @@ class FAQSearchInput(BaseModel):
 
 class SimpleFAQTool(BaseTool):
     """간단한 FAQ 검색 도구"""
-    
+
     name: str = "faq_search"
     description: str = "FAQ 데이터베이스에서 정보를 검색합니다. 환불, 배송, 교환 등의 정책 정보를 찾을 때 사용하세요."  # ❷
     args_schema: Type[BaseModel] = FAQSearchInput  # ❸
-    
-    def __init__(self):
-        super().__init__()
-        
-        # 간단한 FAQ 데이터를 미리 준비합니다
-        self.faq_data = {
-            "환불": {
-                "answer": "환불은 구매일로부터 14일 이내에 가능합니다.",
-                "details": "제품은 미개봉 상태여야 하며, 영수증이 필요합니다."
-            },
-            "배송": {
-                "answer": "표준 배송은 3-5 영업일이 소요됩니다.",
-                "details": "특급 배송(1-2일)도 가능하며, 추가 요금이 발생합니다."
-            },
-            "교환": {
-                "answer": "제품 교환은 수령 후 7일 이내 가능합니다.",
-                "details": "사이즈나 색상 교환이 가능하며, 재고가 있어야 합니다."
-            }
+
+    # 간단한 FAQ 데이터를 미리 준비합니다
+    faq_data: dict = Field(default_factory=lambda: {
+        "환불": {
+            "answer": "환불은 구매일로부터 14일 이내에 가능합니다.",
+            "details": "제품은 미개봉 상태여야 하며, 영수증이 필요합니다."
+        },
+        "배송": {
+            "answer": "표준 배송은 3-5 영업일이 소요됩니다.",
+            "details": "특급 배송(1-2일)도 가능하며, 추가 요금이 발생합니다."
+        },
+        "교환": {
+            "answer": "제품 교환은 수령 후 7일 이내 가능합니다.",
+            "details": "사이즈나 색상 교환이 가능하며, 재고가 있어야 합니다."
         }
+    })
     
     def _run(
         self,

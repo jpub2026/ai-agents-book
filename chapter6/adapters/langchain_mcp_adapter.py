@@ -1,4 +1,4 @@
-from langchain.tools import Tool
+from langchain_core.tools import Tool
 from langchain.agents import initialize_agent, AgentType
 import json
 import subprocess
@@ -72,3 +72,6 @@ def demonstrate_langchain_mcp_integration():
     # )
     print(f"Created MCP tool: {file_tool.name}")
     return file_tool
+
+# 별칭 (호환성)
+LangChainMCPAdapter = MCPToLangChainAdapter
