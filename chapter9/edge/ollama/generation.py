@@ -1,4 +1,5 @@
-from typing import Any
+import time
+from typing import Any, Dict
 
 
 def generate(
@@ -37,7 +38,7 @@ def generate(
             "metrics": {
                 "latency_ms": int(generation_time * 1000),
                 "tokens_generated": output['usage']['completion_tokens'],
-                "tokens_per_second": output['usage']['completion_tokens'] / generation_time,  ❹
+                "tokens_per_second": output['usage']['completion_tokens'] / generation_time,
                 "model": self.model_path.name,
                 "local": True
             }

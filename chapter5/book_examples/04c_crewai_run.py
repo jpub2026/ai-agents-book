@@ -2,12 +2,25 @@
 CrewAI 3단계: 팀 협업 실행
 목표: 전문가들이 협력하여 문제 해결
 """
+import sys
+from pathlib import Path
+import importlib.util
 
 from crewai import Crew, Process
 
-class CrewAITeam:
-    # ... (이전 코드 계속)
-    
+# 04b_crewai_tasks에서 클래스 가져오기
+spec = importlib.util.spec_from_file_location(
+    "crewai_tasks",
+    Path(__file__).parent / "04b_crewai_tasks.py"
+)
+crewai_tasks = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(crewai_tasks)
+CrewAITeamBase = crewai_tasks.CrewAITeam
+
+
+class CrewAITeam(CrewAITeamBase):
+    """실행 기능이 추가된 CrewAI 팀"""
+
     def process(self, inquiry):
         """문의 처리"""
         print(f"\n{'='*60}")

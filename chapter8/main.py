@@ -3,7 +3,24 @@ from slack_notifier import SlackNotifier
 
 # 로거 초기화
 logger = setup_logging("my-agent")
-slack = SlackNotifier()
+
+# SlackNotifier는 SLACK_BOT_TOKEN 환경 변수가 필요합니다
+# 환경 변수가 없으면 None으로 설정
+try:
+    slack = SlackNotifier()
+except ValueError:
+    slack = None
+    logger.warning("SLACK_BOT_TOKEN이 설정되지 않아 Slack 알림이 비활성화됩니다.")
+
+
+def call_api(data):
+    """API 호출 시뮬레이션 함수"""
+    # 실제 구현에서는 requests나 httpx를 사용
+    class MockResponse:
+        status_code = 200
+        def json(self):
+            return {"result": "success", "data": data}
+    return MockResponse()
 
 def process_task(task_id, data):
     """작업을 처리하는 함수"""

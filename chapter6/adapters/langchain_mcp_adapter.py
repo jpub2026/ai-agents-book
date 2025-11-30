@@ -62,9 +62,13 @@ def demonstrate_langchain_mcp_integration():
         tool_description="파일 시스템에서 파일을 읽고 내용을 반환합니다"
     )
     
-    # LangChain 에이전트에서 사용
-    agent = initialize_agent(
-        tools=[file_tool],
-        llm=llm,
-        agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION
-    )
+    # LangChain 에이전트에서 사용 (실제 사용 시 LLM 인스턴스 필요)
+    # from langchain.llms import OpenAI
+    # llm = OpenAI(temperature=0.7)
+    # agent = initialize_agent(
+    #     tools=[file_tool],
+    #     llm=llm,
+    #     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION
+    # )
+    print(f"Created MCP tool: {file_tool.name}")
+    return file_tool

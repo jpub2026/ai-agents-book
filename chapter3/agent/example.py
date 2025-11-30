@@ -1,4 +1,11 @@
-from agent.core import Agent
+import sys
+from pathlib import Path
+
+# 현재 디렉토리를 기준으로 경로 설정
+sys.path.append(str(Path(__file__).parent))
+from core import Agent
+
+
 def main():
     """
     통합 Agent 클래스의 실제 사용 예제입니다.

@@ -2,10 +2,23 @@
 하이브리드 시스템 3단계: 실행 및 분석
 목표: 시스템 성능 측정 및 인사이트 도출
 """
+import sys
+from pathlib import Path
+import importlib.util
 
-class HybridSystem:
-    # ... (이전 코드 계속)
-    
+# 05b_hybrid_router에서 HybridSystem 가져오기
+spec = importlib.util.spec_from_file_location(
+    "hybrid_router",
+    Path(__file__).parent / "05b_hybrid_router.py"
+)
+hybrid_router = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(hybrid_router)
+HybridSystemBase = hybrid_router.HybridSystem
+
+
+class HybridSystem(HybridSystemBase):
+    """성능 분석 기능이 추가된 하이브리드 시스템"""
+
     def print_stats(self):
         """처리 통계 출력"""  # ❶
         total = self.stats["total"]

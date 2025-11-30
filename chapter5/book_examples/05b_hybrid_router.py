@@ -2,9 +2,40 @@
 하이브리드 시스템 2단계: 적응형 라우터
 목표: 복잡도에 따라 최적 시스템 선택
 """
-
+import sys
+from pathlib import Path
 import time
 from typing import Dict
+import importlib.util
+
+# 필요한 모듈들 가져오기
+# 02b_conditional_execution에서 SmartCoordinator 가져오기
+spec_smart = importlib.util.spec_from_file_location(
+    "conditional_execution",
+    Path(__file__).parent / "02b_conditional_execution.py"
+)
+cond_exec = importlib.util.module_from_spec(spec_smart)
+spec_smart.loader.exec_module(cond_exec)
+SmartCoordinator = cond_exec.SmartCoordinator
+
+# 03c_langgraph_run에서 LangGraphWorkflow 가져오기
+spec_langgraph = importlib.util.spec_from_file_location(
+    "langgraph_run",
+    Path(__file__).parent / "03c_langgraph_run.py"
+)
+langgraph_run = importlib.util.module_from_spec(spec_langgraph)
+spec_langgraph.loader.exec_module(langgraph_run)
+LangGraphWorkflow = langgraph_run.LangGraphWorkflow
+
+# 05a_complexity_analyzer에서 ComplexityAnalyzer 가져오기
+spec_analyzer = importlib.util.spec_from_file_location(
+    "complexity_analyzer",
+    Path(__file__).parent / "05a_complexity_analyzer.py"
+)
+complexity_analyzer = importlib.util.module_from_spec(spec_analyzer)
+spec_analyzer.loader.exec_module(complexity_analyzer)
+ComplexityAnalyzer = complexity_analyzer.ComplexityAnalyzer
+
 
 class HybridSystem:
     """복잡도 기반 적응형 멀티 에이전트 시스템"""

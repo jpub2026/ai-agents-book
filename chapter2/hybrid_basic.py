@@ -1,3 +1,6 @@
+from ollama_client import OllamaClient
+
+
 class HybridLLM:
     """
     작업에 따라 로컬/클라우드를 선택하는 시스템

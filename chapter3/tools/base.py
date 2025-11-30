@@ -1,4 +1,3 @@
-from abc import ABC, abstractmethod
 from typing import Any, Dict, List
 from datetime import datetime
 
@@ -7,19 +6,33 @@ import sys
 sys.path.append('../chapter2')
 from llm_interface import LLM
 
-class BaseTool(ABC):
+class BaseTool:
     """
     모든 도구의 기본 클래스
+
+    참고: ABC를 상속하지 않아 직접 인스턴스화할 수 있습니다.
+    실제 프로덕션에서는 추상 클래스로 만들고 구체적인 도구를 구현해야 합니다.
     """
     def __init__(self, name: str, description: str):
         self.name = name
         self.description = description
         self.usage_count = 0
-    
-    @abstractmethod
+
     def execute(self, input_data: Dict[str, Any]) -> Any:
-        """도구를 실행하는 추상 메서드"""
-        pass
+        """
+        도구를 실행합니다.
+
+        기본 구현은 시뮬레이션 결과를 반환합니다.
+        실제 도구는 이 메서드를 오버라이드해야 합니다.
+        """
+        self.usage_count += 1
+        # 시뮬레이션: 입력을 받아서 성공 결과 반환
+        return {
+            'success': True,
+            'tool': self.name,
+            'data': f"{self.description} 완료",
+            'input': input_data
+        }
     
     def validate_input(self, input_data: Dict[str, Any]) -> bool:
         """입력 데이터의 유효성을 검증"""

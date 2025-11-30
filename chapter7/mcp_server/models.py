@@ -1,6 +1,6 @@
 # /mcp_server/models.py
-from pydantic import BaseModel, Field # ❶
-from typing import Dict, List, Any, Optional # ❷
+from pydantic import BaseModel, Field, validator  # ❶
+from typing import Dict, List, Any, Optional  # ❷
 from datetime import datetime
 
 class MCPRequest(BaseModel):

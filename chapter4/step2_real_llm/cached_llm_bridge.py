@@ -3,8 +3,21 @@
 목표: 반복 질문에 대한 효율성 향상
 """
 
+import sys
+import logging
 from datetime import datetime, timedelta
 import hashlib
+from typing import Any, List, Optional
+
+from langchain_core.language_models import BaseLLM
+
+# 부모 디렉토리의 모듈을 import하기 위한 경로 추가
+sys.path.append('..')
+sys.path.append('../../chapter2')
+from llm_interface import LLM
+
+logger = logging.getLogger(__name__)
+
 
 class CachedLLMBridge(BaseLLM):
     """캐싱 기능이 있는 LLM 브리지"""

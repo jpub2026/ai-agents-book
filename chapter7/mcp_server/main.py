@@ -2,8 +2,9 @@
 import asyncio
 from fastapi import FastAPI
 from typing import Dict, Any
+from models import ToolInfo
 from tools.customer import get_customer_tool
-from tools.order import process_order_tool  
+from tools.order import process_order_tool
 from tools.report import generate_report_tool
 
 # 전역 도구 레지스트리

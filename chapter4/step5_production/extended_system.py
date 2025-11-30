@@ -10,11 +10,11 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 from step4_agent.memory_agent import MemoryReActAgent
 
-# 확장 모듈들
-from statistics import StatisticsTracker
-from metrics import MetricsCollector
-from analyzer import Analyzer
-from session import SessionManager
+# 확장 모듈들 (같은 디렉토리에서 import)
+from .statistics import StatisticsTracker
+from .metrics import MetricsCollector
+from .analyzer import Analyzer
+from .session import SessionManager
 
 class ExtendedFAQSystem(MemoryReActAgent):
     def __init__(self):

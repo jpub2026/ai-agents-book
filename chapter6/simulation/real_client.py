@@ -104,8 +104,8 @@ class MCPClient:
             
         return response_data
     
-# 파트 2: 도구 검색과 실행
-# 서버가 제공하는 도구를 탐색하고 안전하게 실행하는 메커니즘
+    # 파트 2: 도구 검색과 실행
+    # 서버가 제공하는 도구를 탐색하고 안전하게 실행하는 메커니즘
     async def list_tools(self) -> List[Dict[str, Any]]:
         """사용 가능한 도구 목록 조회"""
         if not self.is_initialized:
@@ -240,8 +240,8 @@ class MCPClient:
         
         return result
 
-# 파트 3: 연결 종료와 실행 예제
-# 리소스 정리와 실제 사용 시나리오를 통한 전체 통합
+    # 파트 3: 연결 종료와 실행 예제
+    # 리소스 정리와 실제 사용 시나리오를 통한 전체 통합
     async def close(self):
         """연결 정리 및 리소스 해제"""
         if self.websocket:

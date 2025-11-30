@@ -2,7 +2,20 @@
 메모리가 있는 ReAct 에이전트
 목표: 이전 대화를 기억하고 맥락을 이해하기
 """
-# import ReAct 에이전트
+import sys
+
+# 부모 디렉토리의 모듈을 import하기 위한 경로 추가
+sys.path.append('..')
+sys.path.append('../step2_real_llm')
+sys.path.append('../step3_tools')
+
+from langchain.memory import ConversationBufferMemory, ConversationSummaryMemory
+from langchain.agents import create_react_agent, AgentExecutor
+from langchain.prompts import PromptTemplate
+
+from cached_llm_bridge import CachedLLMBridge
+from simple_faq_tool import SimpleFAQTool as ImprovedFAQTool
+
 
 class MemoryReActAgent:
     """대화를 기억하는 에이전트"""

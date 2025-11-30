@@ -2,10 +2,25 @@
 조건부 협업 3단계: 실행 및 성능 분석
 목표: 시스템 효율성 측정
 """
+import sys
+from pathlib import Path
+import importlib.util
 
-class SmartCoordinator:
-    # ... (이전 코드 계속)
-    
+# 02b_conditional_execution에서 SmartCoordinator 가져오기
+spec = importlib.util.spec_from_file_location(
+    "conditional_execution",
+    Path(__file__).parent / "02b_conditional_execution.py"
+)
+cond_exec = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(cond_exec)
+
+# SmartCoordinator를 상속받아 확장
+SmartCoordinatorBase = cond_exec.SmartCoordinator
+
+
+class SmartCoordinator(SmartCoordinatorBase):
+    """통계 기능이 추가된 스마트 코디네이터"""
+
     def print_stats(self):
         """처리 통계 출력"""
         total = self.stats["total"]

@@ -2,10 +2,23 @@
 LangGraph 2단계: 노드(작업) 구현
 목표: 각 단계에서 state를 어떻게 수정하는지 이해
 """
+import sys
+from pathlib import Path
+import importlib.util
 
-class LangGraphWorkflow:
-    # ... (이전 코드 계속)
-    
+# 03a_langgraph_state에서 클래스 가져오기
+spec = importlib.util.spec_from_file_location(
+    "langgraph_state",
+    Path(__file__).parent / "03a_langgraph_state.py"
+)
+langgraph_state = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(langgraph_state)
+LangGraphWorkflowBase = langgraph_state.LangGraphWorkflow
+
+
+class LangGraphWorkflow(LangGraphWorkflowBase):
+    """노드 구현이 추가된 LangGraph 워크플로우"""
+
     def analyze_inquiry(self, state):
         """문의 분석"""  # ❶
         inquiry = state["inquiry"]

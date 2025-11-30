@@ -1,8 +1,11 @@
 # /mcp_client/workflow.py
 from langgraph.graph import StateGraph, END
 from dataclasses import dataclass, field
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, TYPE_CHECKING
 import uuid
+
+if TYPE_CHECKING:
+    from client import MCPClient
 
 @dataclass
 class WorkflowState:

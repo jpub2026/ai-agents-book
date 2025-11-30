@@ -26,7 +26,7 @@ class MCPNode:
         
         # MCP 서버 응답 받기
         mcp_response = self._call_mcp_server(mcp_request)
-        
+
         # 상태 업데이트
         state["results"] = state.get("results", [])
         state["results"].append({
@@ -35,6 +35,11 @@ class MCPNode:
         })
         
         return state
+
+    def _call_mcp_server(self, request: dict) -> dict:
+        """MCP 서버와 실제 통신 (시뮬레이션)"""
+        # 실제 구현에서는 subprocess나 websocket 사용
+        return {"jsonrpc": "2.0", "result": {"status": "success"}, "id": 1}
 
 def create_mcp_workflow():
     """MCP 노드들을 사용하는 LangGraph 워크플로 생성"""

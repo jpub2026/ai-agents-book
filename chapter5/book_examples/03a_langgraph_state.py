@@ -2,9 +2,15 @@
 LangGraph 1단계: 상태 정의와 워크플로우 구조
 목표: 그래프 기반 워크플로우의 뼈대 만들기
 """
+import sys
+from pathlib import Path
 
 from langgraph.graph import StateGraph, END
 from typing import TypedDict
+
+# 4장에서 만든 LLM 브리지 재사용
+sys.path.append(str(Path(__file__).parent.parent.parent / 'chapter4'))
+from step2_real_llm.cached_llm_bridge import CachedLLMBridge
 
 class WorkflowState(TypedDict):
     """워크플로우 전체에서 공유되는 상태"""  # ❶

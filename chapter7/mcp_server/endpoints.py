@@ -1,9 +1,15 @@
 # /mcp_server/endpoints.py
 from fastapi import APIRouter
-from typing import List
+from typing import Dict, Any, List
+from datetime import datetime
 import psutil
 
+from main import TOOLS
+from models import MCPRequest, MCPResponse
+from metrics import get_statistics
+
 router = APIRouter(prefix="/mcp", tags=["MCP Protocol"])
+
 
 @router.get("/tools", response_model=Dict[str, Any])  # ❶
 async def list_tools():

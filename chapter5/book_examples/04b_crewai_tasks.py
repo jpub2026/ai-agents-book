@@ -2,12 +2,25 @@
 CrewAI 2단계: 작업(Task) 정의
 목표: 각 전문가가 수행할 구체적인 작업 명세
 """
+import sys
+from pathlib import Path
+import importlib.util
 
 from crewai import Task
 
-class CrewAITeam:
-    # ... (이전 코드 계속)
-    
+# 04a_crewai_agents에서 클래스 가져오기
+spec = importlib.util.spec_from_file_location(
+    "crewai_agents",
+    Path(__file__).parent / "04a_crewai_agents.py"
+)
+crewai_agents = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(crewai_agents)
+CrewAITeamBase = crewai_agents.CrewAITeam
+
+
+class CrewAITeam(CrewAITeamBase):
+    """작업 정의가 추가된 CrewAI 팀"""
+
     def _create_tasks(self, inquiry):
         """작업 목록 생성"""  # ❶
         
