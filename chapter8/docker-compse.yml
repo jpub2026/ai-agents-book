@@ -1,0 +1,33 @@
+version: '3.8'
+
+services: 
+  # 우리의 에이전트 서비스
+  agent:
+    build: .  # 현재 폴더의 Dockerfile로 빌드
+    ports:
+      - "8000:8000"  # 포트 연결
+    environment:
+      - DATABASE_URL=postgresql://agent:password@postgres:5432/agentdb
+      - ENVIRONMENT=production
+    restart: always  # 항상 자동으로 재시작  ❶
+
+  depends_on:
+      - postgres  # postgres가 먼저 시작되어야 함
+      restart: unless-stopped  # 문제가 생기면 자동으로 재시작
+
+# PostgreSQL 데이터베이스
+  postgres:
+    image: postgres:15-alpine  # 이미 만들어진 이미지 사용
+    environment:
+      - POSTGRES_USER=agent
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=agentdb
+    volumes:
+      - postgres-data:/var/lib/postgresql/data  # 데이터 영속성
+    ports:
+      - "5432:5432"
+    restart: always  # 항상 자동으로 재시작
+
+# 볼륨 정의 (데이터를 저장할 공간)
+volumes:
+  postgres-data:

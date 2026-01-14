@@ -1,0 +1,34 @@
+# Word documents
+*.docx
+*.doc
+
+# Temporary extraction files
+extract_*.py
+analyze_*.py
+check_*.py
+split_*.py
+extracted_*.txt
+extraction_*.txt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

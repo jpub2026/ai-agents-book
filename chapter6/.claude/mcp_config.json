@@ -1,0 +1,41 @@
+{
+    "mcpServers": {
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "/Users/username/Documents"
+            ]
+        },
+        "project_db": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-sqlite",
+                "/path/to/project.db" 
+            ],
+            "description": "프로젝트 데이터베이스"
+        },
+        "github": { 
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-github"],
+            "env": {
+                "GITHUB_TOKEN": "ghp_your_token_here"
+            },
+            "description": "GitHub 저장소 관리"
+        },
+        "weather_api": {
+            "command": "python",
+            "args": ["/path/to/weather_mcp_server.py"],
+            "env": {
+                "WEATHER_API_KEY": "your_api_key"
+            },
+            "description": "날씨 정보 제공"
+        }
+    }
+}
+
+
+
+

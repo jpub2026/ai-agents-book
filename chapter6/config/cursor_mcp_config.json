@@ -1,0 +1,53 @@
+{
+    "mcpServers": {
+        "code-intelligence": {
+            "command": "python",
+            "args": ["-m", "cursor_mcp.code_analyzer", "--workspace", "${workspaceFolder}"],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/.venv/lib/python3.11/site-packages",
+                "ANALYSIS_LEVEL": "comprehensive"
+            },
+            "description": "실시간 코드 분석 및 리팩토링 제안"
+        },
+        "git-workflow": {
+            "command": "node",
+            "args": ["${extensionPath}/mcp-servers/git-workflow.js"],
+            "env": {
+                "GIT_AUTHOR_NAME": "${gitConfig:user.name}",
+                "CONVENTIONAL_COMMITS": "true"
+            },
+            "settings": {
+                "autoStage": true,
+                "commitLinting": "conventional"
+            },
+            "description": "Git 워크플로 자동화"
+        },
+        "test-runner": {
+            "command": "docker",
+            "args": ["run", "--rm", "-v", "${workspaceFolder}:/workspace", "cursor/mcp-test:latest"],
+            "triggers": {
+                "onSave": ["*.py", "*.test.js"],
+                "preCommit": true
+            },
+            "description": "테스트 실행 및 커버리지 분석"
+        },
+        "ai-reviewer": {
+            "command": "node",
+            "args": ["${extensionPath}/mcp-servers/ai-reviewer.js"],
+            "env": {
+                "OPENAI_API_KEY": "${env:OPENAI_API_KEY}",
+                "REVIEW_MODEL": "your_model"
+            },
+            "reviewRules": {
+                "security": ["OWASP", "CWE-Top-25"],
+                "architecture": ["SOLID", "DRY", "KISS"]
+            },
+            "description": "AI 기반 코드 리뷰"
+        }
+    },
+    "globalSettings": {
+        "maxConcurrentServers": 5,
+        "restartOnFailure": true,
+        "timeout": 30000
+    }
+}
