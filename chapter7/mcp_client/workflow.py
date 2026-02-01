@@ -12,18 +12,18 @@ if TYPE_CHECKING:
 
 @dataclass
 class AgentState:
-    """Ollama 에이전트 워크플로우 상태"""
-    messages: List[Dict[str, Any]] = field(default_factory=list)  # ❶ 대화 기록
-    tools: List[Dict[str, Any]] = field(default_factory=list)  # ❷ 사용 가능한 도구
-    tool_results: List[Dict[str, Any]] = field(default_factory=list)  # ❸ 도구 실행 결과
-    final_response: str = ""  # ❹ 최종 응답
-    iteration: int = 0  # ❺ 현재 반복 횟수
-    max_iterations: int = 10  # ❻ 최대 반복 횟수
-    should_continue: bool = True  # ❼ 계속 진행 여부
+    """Ollama 에이전트 워크플로 상태"""
+    messages: List[Dict[str, Any]] = field(default_factory=list)  # 대화 기록
+    tools: List[Dict[str, Any]] = field(default_factory=list)  # 사용 가능한 도구
+    tool_results: List[Dict[str, Any]] = field(default_factory=list)  # 도구 실행 결과
+    final_response: str = ""  # 최종 응답
+    iteration: int = 0  # 현재 반복 횟수
+    max_iterations: int = 10  # 최대 반복 횟수
+    should_continue: bool = True  # 계속 진행 여부
 
 
 class OllamaWorkflow:
-    """Ollama 기반 LLM 에이전트 워크플로우 - LangGraph 사용"""
+    """Ollama 기반 LLM 에이전트 워크플로 - LangGraph 사용"""
 
     def __init__(
         self,
@@ -47,7 +47,7 @@ class OllamaWorkflow:
 
     async def llm_node(self, state: AgentState) -> AgentState:
         """LLM 호출 노드 - Ollama API 사용"""
-        print(f"[워크플로우 {self.workflow_id}] LLM 노드 실행 (반복 {state.iteration + 1})")
+        print(f"[워크플로 {self.workflow_id}] LLM 노드 실행 (반복 {state.iteration + 1})")
 
         state.iteration += 1
 
@@ -108,7 +108,7 @@ class OllamaWorkflow:
 
     async def tool_node(self, state: AgentState) -> AgentState:
         """도구 실행 노드 - MCP 서버를 통해 도구 호출"""
-        print(f"[워크플로우 {self.workflow_id}] 도구 노드 실행")
+        print(f"[워크플로 {self.workflow_id}] 도구 노드 실행")
 
         for tool_call in state.tool_results:
             function_name = tool_call["name"]
@@ -161,18 +161,18 @@ class OllamaWorkflow:
         return "continue"
 
     def create_workflow(self) -> StateGraph:
-        """워크플로우 생성"""
-        workflow = StateGraph(AgentState)  # ❶
+        """워크플로 생성"""
+        workflow = StateGraph(AgentState)  
 
         # 노드 추가
-        workflow.add_node("llm", self.llm_node)  # ❷ LLM 호출 노드
-        workflow.add_node("tools", self.tool_node)  # ❸ 도구 실행 노드
+        workflow.add_node("llm", self.llm_node)  # LLM 호출 노드
+        workflow.add_node("tools", self.tool_node)  #  도구 실행 노드
 
         # 진입점 설정
-        workflow.set_entry_point("llm")  # ❹
+        workflow.set_entry_point("llm") 
 
         # 조건부 엣지: LLM 노드 이후
-        workflow.add_conditional_edges(  # ❺
+        workflow.add_conditional_edges(  
             "llm",
             self.should_continue,
             {
@@ -182,12 +182,12 @@ class OllamaWorkflow:
         )
 
         # 도구 노드 이후 다시 LLM 노드로
-        workflow.add_edge("tools", "llm")  # ❻
+        workflow.add_edge("tools", "llm")  
 
-        return workflow.compile()  # ❼
+        return workflow.compile()  
 
     async def run(self, user_message: str) -> str:
-        """워크플로우 실행"""
+        """워크플로 실행"""
         print(f"\n{'='*60}")
         print(f"[사용자 요청] {user_message}")
         print(f"{'='*60}")
@@ -213,7 +213,7 @@ class OllamaWorkflow:
             tools=tools
         )
 
-        # 워크플로우 생성 및 실행
+        # 워크플로 생성 및 실행
         workflow = self.create_workflow()
         final_state = await workflow.ainvoke(initial_state)
 
@@ -234,7 +234,7 @@ class OllamaWorkflow:
 # 하위 호환성을 위한 기존 클래스 유지 (레거시)
 @dataclass
 class WorkflowState:
-    """워크플로우 상태 (레거시 - 하위 호환성)"""
+    """워크플로 상태"""
     customer_id: str = ""
     customer_data: Optional[Dict] = None
     order_data: Optional[Dict] = None
@@ -244,7 +244,7 @@ class WorkflowState:
 
 
 class MCPWorkflow:
-    """MCP 도구를 사용하는 워크플로우 (레거시 - 하위 호환성)"""
+    """MCP 도구를 사용하는 워크플로"""
 
     def __init__(self, mcp_client: "MCPClient"):
         self.mcp_client = mcp_client
@@ -252,13 +252,13 @@ class MCPWorkflow:
 
     async def fetch_customer_node(self, state: WorkflowState) -> WorkflowState:
         """1단계: 고객 정보 조회"""
-        print(f"[워크플로우 {self.workflow_id}] 1단계: 고객 정보 조회")
+        print(f"[워크플로 {self.workflow_id}] 1단계: 고객 정보 조회")
 
         try:
             if not state.customer_id:
                 state.errors.append("No customer ID provided")
                 return state
-
+            # MCP 도구 호출
             result = await self.mcp_client.call_tool(
                 "get_customer",
                 {"customer_id": state.customer_id, "include_orders": True}
@@ -277,7 +277,7 @@ class MCPWorkflow:
 
     async def process_order_node(self, state: WorkflowState) -> WorkflowState:
         """2단계: 주문 처리"""
-        print(f"[워크플로우 {self.workflow_id}] 2단계: 주문 처리")
+        print(f"[워크플로 {self.workflow_id}] 2단계: 주문 처리")
 
         if not state.customer_data:
             state.errors.append("No customer data for order processing")
@@ -313,7 +313,7 @@ class MCPWorkflow:
 
     async def generate_report_node(self, state: WorkflowState) -> WorkflowState:
         """3단계: 보고서 생성"""
-        print(f"[워크플로우 {self.workflow_id}] 3단계: 보고서 생성")
+        print(f"[워크플로 {self.workflow_id}] 3단계: 보고서 생성")
 
         if not state.order_data:
             state.errors.append("No order data for report generation")
@@ -337,7 +337,7 @@ class MCPWorkflow:
         return state
 
     def create_workflow(self) -> StateGraph:
-        """워크플로우 생성"""
+        """워크플로 생성"""
         workflow = StateGraph(WorkflowState)
 
         workflow.add_node("fetch_customer", self.fetch_customer_node)

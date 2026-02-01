@@ -1,6 +1,6 @@
 import json
 from typing import Dict, List, Any
-# 코드 2-6의 통합 LLM 인터페이스를 import
+# 코드 2-6의 통합 LLM 인터페이스를 불러옵니다.
 import sys
 sys.path.append('../chapter2')  # 2장 코드 경로 추가
 from llm_interface import LLM
@@ -12,7 +12,7 @@ class Planner:
     """
     
     def __init__(self, llm=None):
-        # 통합 LLM 인터페이스 사용 - llm이 없으면 자동 생성 ❶
+        # 통합 LLM 인터페이스 사용 - llm이 없으면 자동 생성 
         self.llm = llm or LLM()  # 자동으로 최적의 제공자 선택
         
         self.planning_prompt_template = """
@@ -56,7 +56,7 @@ class Planner:
         # 통합 LLM 인터페이스를 사용하여 계획 생성
         plan_response = self.llm.generate(
             prompt=prompt,
-            temperature=0.3,  # 계획 수립은 일관성이 중요하므로 낮은 temperature
+            temperature=0.3,  # 계획 수립은 일관성이 중요하므로 낮은 온도
             max_tokens=1000   # 충분한 길이의 계획을 위해
         )
         

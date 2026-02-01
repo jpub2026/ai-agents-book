@@ -1,7 +1,7 @@
 from typing import Any, Dict, List
 from datetime import datetime
 
-# 코드 2-6의 통합 LLM 인터페이스를 import
+# 코드 2-6의 통합 LLM 인터페이스를 불러옵니다.
 import sys
 sys.path.append('../chapter2')
 from llm_interface import LLM
@@ -114,6 +114,6 @@ class ToolManager:
         """
         
         # LLM을 사용하여 도구 선택
-        selected = self.llm.generate(prompt, temperature=0.3, max_tokens=50)
+        selected = self.llm.generate(prompt, temperature=0.1, max_tokens=50)
         
         return self.tools.get(selected.strip()) or list(self.tools.values())[0]

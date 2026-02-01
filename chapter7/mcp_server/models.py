@@ -1,21 +1,21 @@
 # /mcp_server/models.py
-from pydantic import BaseModel, Field, model_validator  # ❶
-from typing import Dict, List, Any, Optional, Literal  # ❷
+from pydantic import BaseModel, Field, model_validator  
+from typing import Dict, List, Any, Optional, Literal 
 from datetime import datetime
 
 class MCPRequest(BaseModel):
     """MCP 요청 모델 - JSON-RPC 2.0 표준 준수"""
 
-    jsonrpc: Literal["2.0"] = "2.0"  # ❶
-    method: str = Field(..., description="호출할 메서드명")  # ❷
+    jsonrpc: Literal["2.0"] = "2.0"  
+    method: str = Field(..., description="호출할 메서드명")  
     params: Optional[Dict[str, Any]] = Field(
         default={},
         description="메서드에 전달할 매개변수"
-    )  # ❸
+    )  
     id: Optional[str] = Field(
         default=None,
         description="요청 식별자 (None이면 알림)"
-    )  # ❹
+    )  
 
     class Config:
         json_schema_extra = {
@@ -35,11 +35,11 @@ class MCPResponse(BaseModel):
 
     jsonrpc: Literal["2.0"] = "2.0"
     id: Optional[str] = None
-    result: Optional[Any] = None  # ❶
-    error: Optional[Dict[str, Any]] = None  # ❷
+    result: Optional[Any] = None  
+    error: Optional[Dict[str, Any]] = None  
 
     @model_validator(mode='after')
-    def check_result_or_error(self):  # ❸
+    def check_result_or_error(self):  
         """result와 error는 상호 배타적"""
         if self.result is not None and self.error is not None:
             raise ValueError('result와 error는 동시에 존재할 수 없음')
@@ -66,15 +66,15 @@ class MCPResponse(BaseModel):
 class ToolInfo(BaseModel):
     """도구 정보 모델 - 도구 발견(discovery)에 사용"""
     
-    name: str = Field(..., description="도구의 고유 식별자")  # ❶
+    name: str = Field(..., description="도구의 고유 식별자")  
     description: str = Field(
         ..., 
         description="도구의 기능 설명 (LLM이 읽고 이해함)"
-    )  # ❷
+    )  
     parameters: Dict[str, Any] = Field(
         ..., 
-        description="JSON Schema 형식의 파라미터 정의"
-    )  # ❸
+        description="JSON 스키마 형식의 파라미터 정의"
+    )  
     
     class Config:
         json_schema_extra = {

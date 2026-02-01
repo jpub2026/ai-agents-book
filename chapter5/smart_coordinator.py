@@ -9,7 +9,7 @@ sys.path.append(str(Path(__file__).parent))
 from basic_collaboration import TechnicalAgent, PolicyAgent
 
 
-# [코드 5-2-1] 조건부 협업 - 문의 유형 분석
+# [코드 5-2] 조건부 협업 - 문의 유형 분석
 class SmartCoordinator:
     """문의 유형을 분석하여 적절한 에이전트 선택"""
 
@@ -26,7 +26,7 @@ class SmartCoordinator:
         }
 
     def analyze_inquiry_type(self, inquiry):
-        """문의 유형 분석"""  # ❶
+        """문의 유형 분석"""  
         tech_keywords = ["작동", "고장", "오류", "에러", "멈춤", "느림",
                         "안됨", "문제", "버그", "화면"]
         policy_keywords = ["환불", "교환", "보증", "정책", "규정",
@@ -43,9 +43,9 @@ class SmartCoordinator:
                          ("policy" if needs_policy else "unknown"))
         }
 
-    # [코드 5-2-2] 조건부 협업 - 실행 및 결과 통합
+    # [코드 5-3] 조건부 협업 - 실행 및 결과 통합
     def process(self, inquiry):
-        """스마트 처리"""  # ❶
+        """스마트 처리""" 
         self.stats["total"] += 1
 
         routing = self.analyze_inquiry_type(inquiry)
@@ -58,7 +58,7 @@ class SmartCoordinator:
         results = {}
 
         # 필요한 에이전트만 실행
-        if routing["technical_needed"]:  # ❷
+        if routing["technical_needed"]: 
             print(" 기술 에이전트 활성화...")
             results["tech"] = self.tech_agent.analyze(inquiry)
             if not routing["policy_needed"]:
@@ -75,7 +75,7 @@ class SmartCoordinator:
             self.stats["both"] += 1
 
         # 결과가 없으면 기본 응답
-        if not results:  # ❸
+        if not results:  
             return self._handle_unknown(inquiry)
 
         # 결과 통합
@@ -93,7 +93,7 @@ class SmartCoordinator:
 또는 고객센터(1234-5678)로 직접 문의해주세요."""
 
     def _integrate_results(self, results):
-        """결과 통합"""  # ❹
+        """결과 통합""" 
         response = "고객님께 답변드립니다.\n\n"
 
         if "tech" in results:
@@ -105,7 +105,7 @@ class SmartCoordinator:
         response += "추가 문의사항이 있으시면 언제든 연락 주세요."
         return response
 
-    # [코드 5-2-3] 조건부 협업 - 통계 분석
+    # [코드 5-4] 조건부 협업 - 통계 분석
     def print_stats(self):
         """처리 통계 출력"""
         total = self.stats["total"]

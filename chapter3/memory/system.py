@@ -16,7 +16,7 @@ class MemorySystem:
         # 장기 기억: 중요한 정보를 영구 저장
         self.long_term_memory = []  # 실제로는 벡터 DB 사용
 
-        # 작업 기억: 현재 작업 컨텍스트
+        # 작업 기억: 현재 작업 콘텍스트
         self.working_memory = {}
         
         self.importance_threshold = 0.7

@@ -47,18 +47,18 @@ def register_tool(
         parameters: JSON Schema 파라미터 정의
     """
     TOOLS[name] = {
-        "handler": handler,  # ❶
+        "handler": handler,  
         "info": ToolInfo(
             name=name,
             description=description,
             parameters=parameters
-        )  # ❷
+        )  
     }
     
-    print(f" 도구 등록: {name}")  # ❸
+    print(f" 도구 등록: {name}")  
     
 # 서버 시작 시 도구 등록
-@app.on_event("startup")  # ❶
+@app.on_event("startup")  
 async def register_all_tools():
     """서버 시작 시 모든 도구를 등록"""
     
@@ -73,7 +73,7 @@ async def register_all_tools():
                 "customer_id": {
                     "type": "string",
                     "description": "고객 ID (예: CUST-12345, VIP-00001)",
-                    "pattern": "^(CUST|VIP)-[0-9]{5}$"  # ❷
+                    "pattern": "^(CUST|VIP)-[0-9]{5}$"  
                 },
                 "include_orders": {
                     "type": "boolean",
@@ -81,7 +81,7 @@ async def register_all_tools():
                     "default": False
                 }
             },
-            "required": ["customer_id"]  # ❸
+            "required": ["customer_id"]  
         }
     )
     
@@ -94,7 +94,7 @@ async def register_all_tools():
             "type": "object",
             "properties": {
                 "customer_id": {"type": "string"},
-                "items": {  # ❹
+                "items": {  
                     "type": "array",
                     "items": {
                         "type": "object",
@@ -106,7 +106,7 @@ async def register_all_tools():
                         "required": ["product_id", "quantity", "price"]
                     }
                 },
-                "payment_method": {  # ❺
+                "payment_method": {  
                     "type": "string",
                     "enum": ["credit_card", "bank_transfer", "mobile_payment"]
                 },
@@ -155,7 +155,7 @@ async def register_all_tools():
                     "default": False
                 }
             },
-            "required": []  # ❶
+            "required": []  
         }
     )
     

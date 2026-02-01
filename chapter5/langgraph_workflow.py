@@ -15,7 +15,7 @@ from llm_bridge import CachedLLMBridge
 
 # LangGraph: 상태 정의와 워크플로 구조
 class WorkflowState(TypedDict):
-    """워크플로 전체에서 공유되는 상태"""  # ❶
+    """워크플로 전체에서 공유되는 상태""" 
     inquiry: str
     current_step: str
     tech_result: dict
@@ -32,7 +32,7 @@ class LangGraphWorkflow:
         self.workflow = self._build_workflow()
 
     def _build_workflow(self):
-        """워크플로 그래프 구축"""  # ❷
+        """워크플로 그래프 구축"""  
         workflow = StateGraph(WorkflowState)
 
         # 노드 추가(각 노드는 하나의 작업)
@@ -45,7 +45,7 @@ class LangGraphWorkflow:
         workflow.set_entry_point("analyze")
 
         # 조건부 분기 추가
-        workflow.add_conditional_edges(  # ❸
+        workflow.add_conditional_edges( 
             "analyze",  # 시작 노드
             self.route_decision,  # 조건 함수
             {  # 가능한 경로
@@ -64,7 +64,7 @@ class LangGraphWorkflow:
         return workflow.compile()
 
     def route_decision(self, state):
-        """다음 노드 결정"""  # ❹
+        """다음 노드 결정""" 
         tech = state.get("tech_needed", False)
         policy = state.get("policy_needed", False)
 
@@ -77,9 +77,12 @@ class LangGraphWorkflow:
         else:
             return "end"
 
-    # LangGraph: 노드 구현
+    """
+    LangGraph 2단계: 노드(작업) 구현
+    목표: 각 단계에서 state를 어떻게 수정하는지 이해
+    """
     def analyze_inquiry(self, state):
-        """문의 분석"""  # ❶
+        """문의 분석"""  
         inquiry = state["inquiry"]
         state["processing_path"] = ["analyze"]
         state["current_step"] = "analyzing"
@@ -94,7 +97,7 @@ class LangGraphWorkflow:
         return state
 
     def tech_analysis(self, state):
-        """기술 분석 수행"""  # ❷
+        """기술 분석 수행""" 
         state["processing_path"].append("technical")
 
         prompt = f"기술 전문가로서 분석: {state['inquiry']}"
@@ -106,7 +109,7 @@ class LangGraphWorkflow:
         return state
 
     def policy_check(self, state):
-        """정책 확인 수행"""  # ❸
+        """정책 확인 수행""" 
         state["processing_path"].append("policy")
 
         tech_context = state.get("tech_result", {})
@@ -122,7 +125,7 @@ class LangGraphWorkflow:
         return state
 
     def create_response(self, state):
-        """최종 응답 생성"""  # ❹
+        """최종 응답 생성""" 
         state["processing_path"].append("finalize")
 
         response = "고객님께 답변드립니다.\n\n"
@@ -138,10 +141,13 @@ class LangGraphWorkflow:
 
         return state
 
-    # LangGraph: 실행 및 테스트
+    """
+    LangGraph 3단계: 워크플로 실행
+    목표: 실제로 동작하는 모습 확인
+    """
     def process(self, inquiry):
         """문의 처리"""
-        initial_state = {  # ❶
+        initial_state = { 
             "inquiry": inquiry,
             "current_step": "start",
             "tech_result": {},
@@ -155,7 +161,7 @@ class LangGraphWorkflow:
         print(f"문의: {inquiry}")
         print(f"{'='*60}\n")
 
-        result = self.workflow.invoke(initial_state)  # ❷
+        result = self.workflow.invoke(initial_state) 
 
         print(f"처리 경로: {' → '.join(result['processing_path'])}")
         print(f"{'='*60}\n")

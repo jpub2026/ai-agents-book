@@ -1,5 +1,7 @@
 """
-CrewAI를 사용한 고객 서비스 팀
+CrewAI 1단계: 전문가 에이전트 정의
+목표: 역할과 전문성을 가진 팀원 구성
+
 
 설치 필요: pip install crewai langchain-openai python-dotenv
 """
@@ -34,14 +36,14 @@ class CrewAITeam:
         self.agents = self._create_agents()
 
     def _create_agents(self):
-        """에이전트 팀 구성"""  # ❶
+        """에이전트 팀 구성""" 
 
         analyst = Agent(
-            role='Customer Inquiry Analyst',  # ❷
+            role='Customer Inquiry Analyst', 
             goal='고객 문의를 정확히 분석하고 분류하기',
             backstory="""당신은 5년 경력의 고객 서비스 분석가입니다.
             수천 건의 문의를 처리한 경험으로 고객의 진짜 니즈를 빠르게 파악합니다.
-            문의 유형, 긴급도, 감정 상태를 정확히 분석하는 전문가입니다.""",  # ❸
+            문의 유형, 긴급도, 감정 상태를 정확히 분석하는 전문가입니다.""", 
             verbose=True,
             llm=self.llm
         )
@@ -74,7 +76,7 @@ class CrewAITeam:
 
     # CrewAI - 작업 정의
     def _create_tasks(self, inquiry):
-        """작업 목록 생성"""  # ❶
+        """작업 목록 생성""" 
 
         # Task 1: 초기 분석
         analysis_task = Task(
@@ -86,11 +88,11 @@ class CrewAITeam:
             1. 문의 유형 (기술/정책/일반)
             2. 긴급도 (높음/중간/낮음)
             3. 고객 감정 상태
-            4. 핵심 요구사항
+            4. 핵심 요구 사항
 
             구조화된 분석 결과를 제공하세요.
             """,
-            expected_output="문의 유형, 긴급도, 감정 상태, 핵심 요구사항을 포함한 분석 보고서",
+            expected_output="문의 유형, 긴급도, 감정 상태, 핵심 요구 사항을 포함한 분석 보고서",
             agent=self.agents["analyst"]
         )
 
@@ -109,7 +111,7 @@ class CrewAITeam:
             """,
             expected_output="기술 진단 결과와 권장 해결 방법",
             agent=self.agents["technical"],
-            context=[analysis_task]  # ❷
+            context=[analysis_task] 
         )
 
         # Task 3: 정책 확인 및 최종 제안
@@ -127,12 +129,16 @@ class CrewAITeam:
             """,
             expected_output="적용 가능한 정책과 고객 맞춤 제안",
             agent=self.agents["policy"],
-            context=[analysis_task, technical_task]  # ❸
+            context=[analysis_task, technical_task] 
         )
 
         return [analysis_task, technical_task, policy_task]
 
-    # CrewAI - 팀 실행
+    """
+    CrewAI 3단계: 팀 협업 실행
+    목표: 전문가들이 협력하여 문제 해결
+    """
+
     def process(self, inquiry):
         """문의 처리"""
         print(f"\n{'='*60}")
@@ -143,7 +149,7 @@ class CrewAITeam:
         crew = Crew(
             agents=list(self.agents.values()),
             tasks=self._create_tasks(inquiry),
-            process=Process.sequential,  # ❶
+            process=Process.sequential, 
             verbose=True
         )
 

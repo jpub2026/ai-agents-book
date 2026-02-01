@@ -129,6 +129,30 @@ class LLM:
     
     def _mock_generate(self, prompt: str) -> str:
         """테스트용 Mock 응답 생성"""
+        # ReAct 에이전트 형식 감지
+        if "Thought:" in prompt and "Action:" in prompt and "Final Answer:" in prompt:
+            # 이미 Observation이 있으면 Final Answer 생성
+            if "Observation:" in prompt and ("14일" in prompt or "3-5 영업일" in prompt or "7일" in prompt):
+                return """Thought: FAQ 도구에서 필요한 정보를 얻었으므로 최종 답변을 준비합니다.
+Final Answer: 검색 결과를 바탕으로 답변드립니다. 자세한 내용은 위의 관측 결과를 참고해주세요."""
+            # FAQ 관련 질문 처리
+            elif "환불" in prompt:
+                return """Thought: 사용자가 환불 정책에 대해 질문하고 있습니다. FAQ 도구를 사용해서 환불 정보를 찾아보겠습니다.
+Action: faq_search
+Action Input: 환불"""
+            elif "배송" in prompt:
+                return """Thought: 사용자가 배송에 대해 질문하고 있습니다. FAQ 도구를 사용해서 배송 정보를 찾아보겠습니다.
+Action: faq_search
+Action Input: 배송"""
+            elif "교환" in prompt:
+                return """Thought: 사용자가 교환에 대해 질문하고 있습니다. FAQ 도구를 사용해서 교환 정보를 찾아보겠습니다.
+Action: faq_search
+Action Input: 교환"""
+            else:
+                return """Thought: 질문을 이해하고 FAQ 도구를 사용해보겠습니다.
+Action: faq_search
+Action Input: 정보"""
+
         # 프롬프트에 따라 적절한 테스트 응답 생성
         responses = {
             "계획": "1. 첫 번째 단계\n2. 두 번째 단계\n3. 세 번째 단계",
@@ -137,12 +161,12 @@ class LLM:
             "번역": "This is a translation example.",
             "요약": "주요 내용: 테스트 시뮬레이션"
         }
-        
+
         # 프롬프트에서 키워드 찾기
         for keyword, response in responses.items():
             if keyword in prompt:
                 return response
-        
+
         # 기본 응답
         return f"[Mock 응답] '{prompt[:50]}...'에 대한 시뮬레이션 응답입니다."
 

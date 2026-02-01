@@ -7,7 +7,7 @@ from langchain_core.tools import BaseTool
 from typing import Optional, Type, Any
 from pydantic import BaseModel, Field
 
-# Pydantic 모델로 입력 스키마 정의  # ❶
+# Pydantic 모델로 입력 스키마 정의 
 class FAQSearchInput(BaseModel):
     """FAQ 검색 도구의 입력 스키마"""
     query: str = Field(description="검색할 질문 또는 키워드")
@@ -16,8 +16,8 @@ class SimpleFAQTool(BaseTool):
     """간단한 FAQ 검색 도구"""
 
     name: str = "faq_search"
-    description: str = "FAQ 데이터베이스에서 정보를 검색합니다. 환불, 배송, 교환 등의 정책 정보를 찾을 때 사용하세요."  # ❷
-    args_schema: Type[BaseModel] = FAQSearchInput  # ❸
+    description: str = "FAQ 데이터베이스에서 정보를 검색합니다. 환불, 배송, 교환 등의 정책 정보를 찾을 때 사용하세요."  
+    args_schema: Type[BaseModel] = FAQSearchInput  
 
     # 간단한 FAQ 데이터를 미리 준비합니다
     faq_data: dict = Field(default_factory=lambda: {

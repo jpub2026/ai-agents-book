@@ -3,9 +3,8 @@ from datetime import datetime
 import json
 import time
 
-# 3.2절에서 구현한 구성요소들을 import
-# 각 구성요소는 독립적으로 개발되었지만,
-# 이제 하나의 시스템으로 통합됩니다
+# 3.2절에서 구현한 구성요소들을 불러옵니다.
+# 각 구성요소는 독립적으로 개발되었지만, 이제 하나의 시스템으로 통합됩니다
 import sys
 sys.path.append('../core')      # Planner가 있는 경로
 sys.path.append('../memory')     # MemorySystem이 있는 경로
@@ -149,7 +148,7 @@ class Agent:
             print("\n[2단계] 계획 수립")
             print("-" * 40)
             
-            # 계획 수립을 위한 컨텍스트 준비
+            # 계획 수립을 위한 콘텍스트 준비
             # 이 정보들이 더 나은 계획을 만드는 데 도움이 됩니다
             context = {
                 'memories': memories,  # 과거 경험
@@ -369,7 +368,7 @@ class Agent:
         
         작업 기억을 초기화하고 현재 작업 정보를 저장합니다.
         이를 통해 여러 작업을 순차적으로 처리할 때
-        각 작업이 독립적인 컨텍스트를 가질 수 있습니다.
+        각 작업이 독립적인 콘텍스트를 가질 수 있습니다.
         """
         # 이전 작업 기억 정리
         # 새 작업을 시작하기 전에 깨끗한 상태로 만듭니다

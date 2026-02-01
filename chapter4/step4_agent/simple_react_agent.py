@@ -9,7 +9,7 @@ from pathlib import Path
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain_core.prompts import PromptTemplate
 
-# 이전 단계의 모듈들을 불러온다.
+# 이전 단계의 모듈들을 불러옵니다.
 sys.path.append(str(Path(__file__).parent.parent))
 from step2_real_llm.cached_llm_bridge import CachedLLMBridge
 from step3_tools.improved_faq_tool import ImprovedFAQTool
@@ -50,3 +50,67 @@ class SimpleReActAgent:
         )
 
         print("Agent ready!\n")
+
+    def _create_prompt(self) -> PromptTemplate:
+        """ReAct 프롬프트 템플릿 생성"""  # ❶
+
+        template = """당신은 친절한 FAQ 도우미입니다.
+
+사용 가능한 도구:
+{tools}
+
+도구 이름: {tool_names}
+
+사용자 질문: {input}
+
+다음 형식을 정확히 따라서 단계별로 생각하고 답변하세요:
+
+Thought: 사용자의 질문을 이해하고, 어떤 정보를 찾아야 할지 생각합니다.
+Action: 사용할 도구의 이름을 정확히 적습니다.
+Action Input: 도구에 전달할 검색어나 질문을 적습니다.
+Observation: (도구의 실행 결과가 자동으로 여기에 나타납니다)
+
+필요하다면 위 과정을 반복할 수 있습니다.
+
+Thought: 이제 충분한 정보를 얻었으므로 최종 답변을 준비합니다.
+Final Answer: 사용자에게 친절하고 명확한 답변을 제공합니다.
+
+시작하세요!
+
+{agent_scratchpad}"""  # ❷
+
+        return PromptTemplate(
+            input_variables=["tools", "tool_names", "input", "agent_scratchpad"],
+            template=template
+        )
+
+    def ask(self, question: str) -> str:
+        """사용자 질문에 답변합니다"""
+        try:
+            print(f"\n{'='*60}")
+            print(f"User Question: {question}")
+            print(f"{'='*60}\n")
+
+            # 에이전트 실행
+            result = self.executor.invoke({"input": question})
+            return result["output"]
+
+        except Exception as e:
+            return f"죄송합니다. 오류가 발생했습니다: {e}"
+
+
+if __name__ == "__main__":
+    # 에이전트 생성 및 테스트
+    agent = SimpleReActAgent()
+
+    # 테스트 질문
+    test_questions = [
+        "환불 정책이 어떻게 되나요?",
+        "배송은 얼마나 걸려요?",
+    ]
+
+    for question in test_questions:
+        print(f"\n질문: {question}")
+        print("-" * 50)
+        answer = agent.ask(question)
+        print(f"답변: {answer}")

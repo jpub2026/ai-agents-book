@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 
-# 현재 디렉토리를 기준으로 경로 설정
+# 현재 디렉터리를 기준으로 경로 설정
 sys.path.append(str(Path(__file__).parent))
 from core import Agent
 

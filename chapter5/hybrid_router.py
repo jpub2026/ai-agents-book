@@ -25,7 +25,7 @@ class HybridCoordinator(SmartCoordinator):
             "llm": 0
         }
 
-    def analyze_inquiry_type_hybrid(self, inquiry):  # ❶
+    def analyze_inquiry_type_hybrid(self, inquiry):  
         """하이브리드 라우팅: 키워드 우선, 불명확시 LLM 사용"""
 
         # 1단계: 빠른 키워드 매칭
@@ -35,7 +35,7 @@ class HybridCoordinator(SmartCoordinator):
         has_tech = any(word in inquiry for word in tech_keywords)
         has_policy = any(word in inquiry for word in policy_keywords)
 
-        # 명확한 케이스는 즉시 반환  # ❷
+        # 명확한 케이스는 즉시 반환  
         if has_policy and not has_tech:
             self.routing_stats["keyword"] += 1
             return {
@@ -54,7 +54,7 @@ class HybridCoordinator(SmartCoordinator):
                 "method": "keyword"
             }
 
-        # 2단계: 애매한 경우만 LLM에 물어본다.  # ❸
+        # 2단계: 애매한 경우만 LLM에 물어본다.  
         self.routing_stats["llm"] += 1
 
         prompt = f"""다음 고객 문의를 분류하세요.
@@ -73,7 +73,7 @@ class HybridCoordinator(SmartCoordinator):
         return self._parse_llm_result(llm_result)
 
     #하이브리드 라우팅: LLM 응답 파싱 및 통계
-    def _parse_llm_result(self, result):  # ❶
+    def _parse_llm_result(self, result): 
         """LLM 응답을 라우팅 정보로 변환"""
         result_upper = result.strip().upper()
 
@@ -98,7 +98,7 @@ class HybridCoordinator(SmartCoordinator):
                 "complexity": "both",
                 "method": "llm"
             }
-        else:  # ❷
+        else:  
             return {
                 "technical_needed": False,
                 "policy_needed": False,
@@ -106,7 +106,7 @@ class HybridCoordinator(SmartCoordinator):
                 "method": "llm"
             }
 
-    def print_routing_stats(self):  # ❸
+    def print_routing_stats(self):  
         """라우팅 방법 통계 출력"""
         total = self.routing_stats["keyword"] + self.routing_stats["llm"]
         if total == 0:

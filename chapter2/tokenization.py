@@ -35,7 +35,7 @@ class TokenAnalyzer:
             "character_count": char_count,
             "chars_per_token": round(chars_per_token, 1),
             "estimated_cost": {
-                "gpt-3.5": f"${cost_gpt35:.4f}",
+                "gpt-3.5": f"${cost_gpt35:.4f}", 
                 "gpt-4": f"${cost_gpt4:.4f}"
             }
         }

@@ -8,20 +8,20 @@ import uuid
 class MCPClient:
     """MCP 서버와 통신하는 클라이언트"""
 
-    def __init__(self, base_url: str = "http://localhost:8000"):  # ❶
+    def __init__(self, base_url: str = "http://localhost:8000"):  
         self.base_url = base_url
-        self.client = httpx.AsyncClient(timeout=30.0)  # ❷
-        self.tools = {}  # ❸
+        self.client = httpx.AsyncClient(timeout=30.0)  
+        self.tools = {}  
 
     async def discover_tools(self) -> Dict[str, Any]:
         """서버의 도구 목록 조회"""
-        response = await self.client.get(f"{self.base_url}/mcp/tools")  # ❹
-        response.raise_for_status()  # ❺
+        response = await self.client.get(f"{self.base_url}/mcp/tools")  
+        response.raise_for_status()  
 
         data = response.json()
 
         # 도구 캐싱
-        for tool in data["tools"]:  # ❻
+        for tool in data["tools"]:  
             self.tools[tool["name"]] = tool
 
         return self.tools
@@ -34,7 +34,7 @@ class MCPClient:
         """ 도구 호출 """
 
         # 도구 존재 확인 (캐시)
-        if tool_name not in self.tools:  # ❶
+        if tool_name not in self.tools:  
             raise ValueError(f"Unknown tool: {tool_name}")
 
         # JSON-RPC 2.0 요청 생성
@@ -45,11 +45,11 @@ class MCPClient:
                 "name": tool_name,
                 "arguments": arguments
             },
-            "id": str(uuid.uuid4())  # ❷
+            "id": str(uuid.uuid4())  
         }
 
         # 서버에 요청
-        response = await self.client.post(  # ❸
+        response = await self.client.post(  
             f"{self.base_url}/mcp/execute",
             json=request
         )
@@ -58,7 +58,7 @@ class MCPClient:
         data = response.json()
 
         # 에러 확인 (error가 null이 아닌 경우만)
-        if data.get("error"):  # ❹
+        if data.get("error"):  
             error_msg = data["error"].get("message", "Unknown error")
             raise Exception(f"MCP Error: {error_msg}")
 
@@ -80,7 +80,7 @@ class MCPClient:
 
     async def close(self):
         """클라이언트 연결 종료"""
-        await self.client.aclose()  # ❺
+        await self.client.aclose()  
 
 
 class OllamaAgent:

@@ -22,7 +22,7 @@ class TraditionalIntegration:
         
     def connect_claude(self, api_key: str) -> None:
         """Claude API 연결"""
-        #  Claude는 엔트로픽 클라이언트를 사용
+        #  Claude는 앤트로픽 클라이언트를 사용
         self.claude_client = anthropic.Anthropic(api_key=api_key)
         
     def connect_gemini(self, api_key: str) -> None:
@@ -35,7 +35,7 @@ class TraditionalIntegration:
         """OpenAI에 질의"""
         if not self.openai_client:
             raise ValueError("OpenAI client not initialized")
-            
+        # GPT의 메시지 형식
         response = self.openai_client.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
@@ -47,7 +47,7 @@ class TraditionalIntegration:
         """Claude에 질의"""
         if not self.claude_client:
             raise ValueError("Claude client not initialized")
-            
+        # Claude의 메시지 형식
         response = self.claude_client.messages.create(
             model="claude-3-opus-20240229",
             max_tokens=1000,

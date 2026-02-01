@@ -42,6 +42,7 @@ class MCPUnifiedApproach:
         
         request_id = self.generate_request_id()
         
+        # JSON-RPC 2.0 표준 형식의 요청 생성
         request = {
             "jsonrpc": "2.0",
             "method": f"{service_name}.{method}",

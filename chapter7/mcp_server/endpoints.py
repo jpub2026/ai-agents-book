@@ -11,7 +11,7 @@ from metrics import get_statistics
 router = APIRouter(prefix="/mcp", tags=["MCP Protocol"])
 
 
-@router.get("/tools", response_model=Dict[str, Any])  # ❶
+@router.get("/tools", response_model=Dict[str, Any])  
 async def list_tools():
     """
     사용 가능한 모든 도구 목록 반환
@@ -22,7 +22,7 @@ async def list_tools():
     """
     tools_list = []
     
-    for name, tool_data in TOOLS.items():  # ❷
+    for name, tool_data in TOOLS.items(): 
         tools_list.append({
             "name": name,
             "description": tool_data["info"].description,
@@ -31,11 +31,11 @@ async def list_tools():
     
     return {
         "tools": tools_list,
-        "count": len(tools_list)  # ❸
+        "count": len(tools_list)  
     }
 
-@router.post("/execute", response_model=MCPResponse)  # ❶
-async def execute_mcp(request: MCPRequest):  # ❷
+@router.post("/execute", response_model=MCPResponse)  
+async def execute_mcp(request: MCPRequest):  
     """
     MCP 요청 처리 - JSON-RPC 2.0 프로토콜
     
@@ -48,13 +48,13 @@ async def execute_mcp(request: MCPRequest):  # ❷
         params = request.params or {}
         
         # 1. tools/list 메서드
-        if method == "tools/list":  # ❶
+        if method == "tools/list":  
             tools_list = []
             for name, tool_data in TOOLS.items():
                 tools_list.append({
                     "name": name,
                     "description": tool_data["info"].description,
-                    "inputSchema": tool_data["info"].parameters  # ❷
+                    "inputSchema": tool_data["info"].parameters  
                 })
             
             return MCPResponse(
@@ -62,12 +62,12 @@ async def execute_mcp(request: MCPRequest):  # ❷
                 result={"tools": tools_list}
             )
         # 2. tools/call 메서드
-        elif method == "tools/call":  # ❶
+        elif method == "tools/call":  
             tool_name = params.get("name")
             tool_params = params.get("arguments", {})
             
             # 도구 존재 확인
-            if tool_name not in TOOLS:  # ❷
+            if tool_name not in TOOLS:  
                 return MCPResponse(
                     id=request.id,
                     error={
@@ -77,8 +77,8 @@ async def execute_mcp(request: MCPRequest):  # ❷
                 )
             
             # 도구 실행
-            handler = TOOLS[tool_name]["handler"]  # ❸
-            result = await handler(tool_params)  # ❹
+            handler = TOOLS[tool_name]["handler"]  
+            result = await handler(tool_params)  
             
             return MCPResponse(
                 id=request.id,
@@ -86,7 +86,7 @@ async def execute_mcp(request: MCPRequest):  # ❷
             )
         
         # 3. 알 수 없는 메서드
-        else:  # ❺
+        else:  
             return MCPResponse(
                 id=request.id,
                 error={
@@ -95,7 +95,7 @@ async def execute_mcp(request: MCPRequest):  # ❷
                 }
             )
             
-    except Exception as e:  # ❻
+    except Exception as e:  
         return MCPResponse(
             id=request.id,
             error={
@@ -112,24 +112,24 @@ async def health_check():
     issues = []
     
     # 1. 도구 등록 확인
-    if len(TOOLS) == 0:  # ❷
+    if len(TOOLS) == 0:  
         is_healthy = False
         issues.append("No tools registered")
     
     # 2. 메모리 사용량 확인  
-    memory_percent = psutil.virtual_memory().percent  # ❸
+    memory_percent = psutil.virtual_memory().percent  
     if memory_percent > 90:
         is_healthy = False
         issues.append(f"High memory usage: {memory_percent}%")
     
     # 3. CPU 사용량 확인
-    cpu_percent = psutil.cpu_percent(interval=0.1)  # ❹
+    cpu_percent = psutil.cpu_percent(interval=0.1)  
     if cpu_percent > 90:
         is_healthy = False
         issues.append(f"High CPU usage: {cpu_percent}%")
     
     return {
-        "status": "healthy" if is_healthy else "degraded",  # ❺
+        "status": "healthy" if is_healthy else "degraded",  
         "timestamp": datetime.now().isoformat(),
         "tools_count": len(TOOLS),
         "system": {
@@ -142,6 +142,6 @@ async def health_check():
 @router.get("/metrics")
 async def get_metrics():
     """성능 메트릭 조회"""
-    return get_statistics()  # ❶
+    return get_statistics()  
 
 

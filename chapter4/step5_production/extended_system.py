@@ -10,7 +10,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 from step4_agent.memory_agent import MemoryReActAgent
 
-# 확장 모듈들 (같은 디렉토리에서 import)
+# 확장 모듈들 (같은 디렉토리에서 불러오기)
 from .statistics import StatisticsTracker
 from .metrics import MetricsCollector
 from .analyzer import Analyzer

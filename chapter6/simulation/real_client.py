@@ -28,7 +28,7 @@ class MCPClient:
     async def connect(self):
         """서버에 WebSocket 연결 수립"""
         try:
-            # WebSocket 연결 생성 ❶
+            # WebSocket 연결 생성 
             self.websocket = await websockets.connect(
                 self.server_url,
                 ping_interval=20,  # 20초마다 핑 전송
@@ -44,65 +44,53 @@ class MCPClient:
         if not self.websocket:
             raise RuntimeError("Not connected to server. Call connect() first.")
         
-        # 메시지 ID 생성 및 관리 ❷
+        # 초기화 요청 메시지 구성 
         self.message_id += 1
-        current_id = self.message_id
-        
-        # 초기화 요청 구성 ❸
         init_request = {
             "jsonrpc": "2.0",
             "method": "initialize",
             "params": {
-                "protocolVersion": "1.0.0",
+                "protocolVersion": "0.1.0",
                 "capabilities": {
-                    "tools": True,      # 도구 실행 가능
-                    "prompts": True,    # 프롬프트 템플릿 지원
-                    "resources": True   # 리소스 접근 가능
+                    "tools": {},      # 클라이언트가 지원하는 도구
+                    "prompts": {}     # 클라이언트가 지원하는 프롬프트
                 },
                 "clientInfo": {
-                    "name": "MCP Python Client",
+                    "name": "example-client",
                     "version": "1.0.0"
                 }
             },
-            "id": current_id
+            "id": self.message_id
         }
-        
-        # 요청 전송 및 응답 대기 ❹
+
+        # 웹소켓을 통한 초기화 요청 전송 
         await self.websocket.send(json.dumps(init_request))
         
-        # 타임아웃 설정으로 응답 대기
-        try:
-            response = await asyncio.wait_for(
-                self.websocket.recv(),
-                timeout=5.0  # 5초 타임아웃
-            )
-        except asyncio.TimeoutError:
-            raise TimeoutError("Server did not respond to initialization")
-        
-        response_data = json.loads(response)
-        
-        # 응답 검증 및 상태 업데이트 ❺
-        if response_data.get("id") != current_id:
-            raise MCPError(-1, "Response ID mismatch")
-        
-        if "error" in response_data:
-            error = response_data["error"]
-            raise MCPError(
-                error.get("code", -1),
-                error.get("message", "Unknown error"),
-                error.get("data")
-            )
-        
-        # 서버 capabilities 저장
-        if "result" in response_data:
-            result = response_data["result"]
-            self.capabilities = result.get("capabilities", {})
-            self.is_initialized = True
-            
-            print(f"Initialized with server: {result.get('serverInfo', {})}")
-            print(f"Server capabilities: {list(self.capabilities.keys())}")
-            
-        return response_data
+        # 서버 응답 대기(10초 타임아웃 설정) 
+        response = await asyncio.wait_for(
+            self.websocket.recv(),
+            timeout=10.0
+        )
+
+        # 응답 파싱 및 유효성 검증 
+        init_response = json.loads(response)
+        if "result" not in init_response:
+            raise MCPError(-1, "Invalid initialization response")
+
+        result = init_response["result"]
+        self.capabilities = result.get("capabilities", {})
+        self.is_initialized = True
+
+        # 초기화 완료 알림 전송 
+        initialized_notification = {
+            "jsonrpc": "2.0",
+            "method": "initialized",
+            "params": {}
+        }
+        await self.websocket.send(json.dumps(initialized_notification))
+
+        print(f"MCP initialization successful. Server info: {init_response['result']}")
+        return init_response["result"]
     
     # 파트 2: 도구 검색과 실행
     # 서버가 제공하는 도구를 탐색하고 안전하게 실행하는 메커니즘
@@ -133,7 +121,7 @@ class MCPClient:
         
         response_data = json.loads(response)
         
-        # 도구 정보 파싱 및 검증 ❼
+        # 도구 정보 파싱 및 검증 
         if "result" in response_data:
             tools = response_data["result"].get("tools", [])
             self.available_tools = tools
@@ -221,7 +209,7 @@ class MCPClient:
             print(f"Tool execution failed: {error.get('message')}")
             
             # 사용 가능한 도구 목록 제공
-            if error.get("code") == -32601:  # Method not found
+            if error.get("code") == -32601:  # 요청한 메서드를 찾을 수 없음
                 print(f"Available tools: {available_tool_names}")
             
             raise MCPError(
@@ -269,7 +257,7 @@ async def main():
 
         # 2. 프로토콜 초기화
         init_result = await client.initialize()
-        server_info = init_result.get("result", {}).get("serverInfo", {})
+        server_info = init_result.get("serverInfo", {})
         print(f"\nServer: {server_info.get('name')} v{server_info.get('version')}")
         
         # 3. 도구 발견

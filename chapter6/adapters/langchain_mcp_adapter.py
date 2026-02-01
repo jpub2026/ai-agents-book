@@ -1,9 +1,7 @@
-from langchain_core.tools import Tool
+from langchain.tools import Tool
+from langchain.agents import initialize_agent, AgentType
 import json
 import subprocess
-
-# 참고: LangChain 에이전트 사용 시 필요한 import (주석 처리된 예제용)
-# from langchain.agents import create_react_agent, AgentExecutor
 
 class MCPToLangChainAdapter:
     """
