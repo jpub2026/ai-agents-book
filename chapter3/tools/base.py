@@ -79,7 +79,7 @@ class ToolManager:
     모든 도구를 관리하는 클래스
     """
     def __init__(self, llm=None):
-        self.tools = {}  # ❻
+        self.tools = {}  
         self.llm = llm or LLM()  # 통합 LLM 인터페이스 사용
     
     def register_tool(self, tool: BaseTool):

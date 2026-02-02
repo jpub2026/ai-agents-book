@@ -10,7 +10,7 @@ class MCPRequest(BaseModel):
     method: str = Field(..., description="호출할 메서드명")  
     params: Optional[Dict[str, Any]] = Field(
         default={},
-        description="메서드에 전달할 매개변수"
+        description="메서드에 전달할 파라미터"
     )  
     id: Optional[str] = Field(
         default=None,

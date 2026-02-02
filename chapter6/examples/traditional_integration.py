@@ -59,7 +59,7 @@ class TraditionalIntegration:
         """Gemini에 질의"""
         if not self.gemini_model:
             raise ValueError("Gemini model not initialized")
-
+        # Gemini의 간단한 콘텐츠 생성 방식
         response = self.gemini_model.generate_content(prompt)
         return response.text
     
@@ -67,7 +67,7 @@ class TraditionalIntegration:
         """모든 AI 서비스에 동일한 질문"""
         results = {}
         
-        # 각 서비스마다 다른 에러 처리 필요
+        # 서비스마다 다른 에러 처리 필요
         try:
             results['openai'] = self.query_openai(prompt)
         except Exception as e:
@@ -89,7 +89,7 @@ class TraditionalIntegration:
 if __name__ == "__main__":
     integration = TraditionalIntegration()
     
-    # 각 서비스별로 다른 초기화 방식
+    # 서비스마다 다른 초기화 방식
     integration.connect_openai(os.getenv("OPENAI_API_KEY"))
     integration.connect_claude(os.getenv("ANTHROPIC_API_KEY"))
     integration.connect_gemini(os.getenv("GEMINI_API_KEY"))

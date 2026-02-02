@@ -11,30 +11,30 @@ from metrics import (
 def add_metrics_middleware(app):
     """메트릭 미들웨어를 앱에 추가하는 함수"""
 
-    @app.middleware("http")  # ❶
-    async def metrics_middleware(request: Request, call_next):  # ❷
+    @app.middleware("http")  
+    async def metrics_middleware(request: Request, call_next):  
         """모든 HTTP 요청에 대해 메트릭 수집"""
 
         # 시작 시간 기록
-        start_time = time()  # ❸
+        start_time = time()  
 
         # 요청 카운트 증가
         increment_request_count()
 
         try:
             # 실제 엔드포인트 실행
-            response = await call_next(request)  # ❹
+            response = await call_next(request)  
 
             # 응답 시간 계산
-            response_time = (time() - start_time) * 1000  # ms 단위  # ❺
+            response_time = (time() - start_time) * 1000  # 밀리초 단위  
             record_response_time(response_time)
 
             # 응답 헤더에 메트릭 추가
-            response.headers["X-Response-Time"] = f"{response_time:.2f}ms"  # ❻
+            response.headers["X-Response-Time"] = f"{response_time:.2f}ms"  
 
             return response
 
-        except Exception as e:  # ❼
+        except Exception as e:  
             # 에러 카운트 증가
             increment_error_count()
 

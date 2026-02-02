@@ -73,6 +73,11 @@ class HybridCoordinator(SmartCoordinator):
         return self._parse_llm_result(llm_result)
 
     #하이브리드 라우팅: LLM 응답 파싱 및 통계
+    """
+    하이브리드 라우팅 2단계: LLM 응답 파싱 및 통계 수집
+    목표: 안전한 응답 처리와 성능 측정
+    """
+
     def _parse_llm_result(self, result): 
         """LLM 응답을 라우팅 정보로 변환"""
         result_upper = result.strip().upper()

@@ -171,7 +171,7 @@ class OllamaWorkflow:
         # 진입점 설정
         workflow.set_entry_point("llm") 
 
-        # 조건부 엣지: LLM 노드 이후
+        # 조건부 에지: LLM 노드 이후
         workflow.add_conditional_edges(  
             "llm",
             self.should_continue,
@@ -279,11 +279,13 @@ class MCPWorkflow:
         """2단계: 주문 처리"""
         print(f"[워크플로 {self.workflow_id}] 2단계: 주문 처리")
 
+        # 선행 조건 확인
         if not state.customer_data:
             state.errors.append("No customer data for order processing")
             return state
 
         try:
+            # 샘플 주문 데이터(실제로는 입력받음)
             order_params = {
                 "customer_id": state.customer_id,
                 "items": [

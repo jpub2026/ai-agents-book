@@ -13,7 +13,7 @@ from typing import Any, List, Optional
 from langchain_core.language_models import BaseLLM
 from langchain_core.outputs import Generation, LLMResult
 
-# 부모 디렉터리의 모듈을 import하기 위한 경로 추가
+# 부모 디렉터리의 모듈을 불러오기 위한 경로 추가
 sys.path.append(str(Path(__file__).parent.parent.parent))
 from chapter2.llm_interface import LLM
 

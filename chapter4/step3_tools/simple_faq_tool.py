@@ -19,7 +19,7 @@ class SimpleFAQTool(BaseTool):
     description: str = "FAQ 데이터베이스에서 정보를 검색합니다. 환불, 배송, 교환 등의 정책 정보를 찾을 때 사용하세요."  
     args_schema: Type[BaseModel] = FAQSearchInput  
 
-    # 간단한 FAQ 데이터를 미리 준비합니다
+    # 간단한 FAQ 데이터를 미리 준비합니다.
     faq_data: dict = Field(default_factory=lambda: {
         "환불": {
             "answer": "환불은 구매일로부터 14일 이내에 가능합니다.",

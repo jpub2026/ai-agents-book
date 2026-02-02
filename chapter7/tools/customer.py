@@ -9,22 +9,22 @@ async def get_customer_tool(params: Dict) -> Dict:
     실제 환경에서는 데이터베이스 쿼리를 수행하지만
     여기서는 CRM 시스템을 시뮬레이션합니다.
     """
-    customer_id = params.get("customer_id", "")  # ❶
-    include_orders = params.get("include_orders", False)  # ❷
+    customer_id = params.get("customer_id", "")  
+    include_orders = params.get("include_orders", False)  
     
     # 고객 ID 패턴 분석
     customer_data = {
         "customer_id": customer_id,
-        "name": f"고객_{customer_id[-3:]}",  # ❸
+        "name": f"고객_{customer_id[-3:]}",  
         "email": f"customer_{customer_id}@example.com",
         "created_at": "2024-01-15T10:30:00Z",
-        "tier": "gold" if customer_id.startswith("VIP") else "silver",  # ❹
+        "tier": "gold" if customer_id.startswith("VIP") else "silver", 
         "total_spent": 1250000 if customer_id.startswith("VIP") else 450000,
         "last_login": datetime.now().isoformat()
     }
     
     # 선택적 주문 내역 포함
-    if include_orders:  # ❶
+    if include_orders:  
         customer_data["recent_orders"] = [
             {
                 "order_id": f"ORD-{customer_id}-001",
@@ -41,7 +41,7 @@ async def get_customer_tool(params: Dict) -> Dict:
         ]
     
     # 비즈니스 로직: 신용도 점수 계산
-    credit_score = 700  # ❷
+    credit_score = 700  
     if customer_data["tier"] == "gold":
         credit_score += 50
     if customer_data["total_spent"] > 1000000:
@@ -51,7 +51,7 @@ async def get_customer_tool(params: Dict) -> Dict:
     return {
         "success": True,
         "data": customer_data,
-        "query_time_ms": 42,  # ❸
+        "query_time_ms": 42,  
         "cached": False,
         "timestamp": datetime.now().isoformat()
     }

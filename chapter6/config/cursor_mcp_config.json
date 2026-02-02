@@ -7,7 +7,7 @@
                 "PYTHONPATH": "${workspaceFolder}/.venv/lib/python3.11/site-packages",
                 "ANALYSIS_LEVEL": "comprehensive"
             },
-            "description": "실시간 코드 분석 및 리팩토링 제안"
+            "description": "실시간 코드 분석 및 리팩터링 제안"
         },
         "git-workflow": {
             "command": "node",
@@ -20,7 +20,7 @@
                 "autoStage": true,
                 "commitLinting": "conventional"
             },
-            "description": "Git 워크플로 자동화"
+            "description": "깃 워크플로 자동화"
         },
         "test-runner": {
             "command": "docker",

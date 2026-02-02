@@ -4,7 +4,7 @@
 """
 import sys
 
-# 부모 디렉토리의 모듈을 import하기 위한 경로 추가
+# 부모 디렉토리의 모듈을 불러오기 위한 위한 경로 추가
 sys.path.append('..')
 sys.path.append('../step2_real_llm')
 sys.path.append('../step3_tools')
