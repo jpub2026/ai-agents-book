@@ -3,11 +3,11 @@
 목표: LangChain과 우리의 LLM을 연결만 하기
 """
 
-from langchain_core.language_models import BaseLLM
+from langchain_core.language_models import LLM
 from langchain_core.outputs import Generation, LLMResult
 from typing import Any, List, Optional
 
-class SimpleLLMBridge(BaseLLM):
+class SimpleLLMBridge(LLM):
     """가장 간단한 형태의 LLM 브리지"""
 
     @property
