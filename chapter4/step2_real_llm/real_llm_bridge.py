@@ -6,7 +6,7 @@
 
 import sys
 from pathlib import Path
-from langchain_core.language_models import BaseLLM
+from langchain_core.language_models import LLM
 from langchain_core.outputs import Generation, LLMResult
 from typing import Any, List, Optional
 import logging
@@ -20,7 +20,7 @@ sys.path.append(str(Path(__file__).parent.parent.parent / 'chapter2'))
 from llm_interface import LLM
 
 
-class RealLLMBridge(BaseLLM):
+class RealLLMBridge(LLM):
     """실제 LLM과 연결된 브리지"""
 
     # Pydantic 필드 선언
