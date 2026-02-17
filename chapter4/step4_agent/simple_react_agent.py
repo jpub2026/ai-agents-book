@@ -12,7 +12,7 @@ from langchain_core.prompts import PromptTemplate
 # 이전 단계의 모듈들을 불러옵니다.
 sys.path.append(str(Path(__file__).parent.parent))
 from step2_real_llm.cached_llm_bridge import CachedLLMBridge
-from step3_tools.improved_faq_tool import ImprovedFAQTool
+from step3_tools.hybrid_faq_tool import HybridFAQTool
 
 
 class SimpleReActAgent:
