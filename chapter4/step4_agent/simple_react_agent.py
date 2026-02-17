@@ -7,6 +7,8 @@
 import sys
 from pathlib import Path
 from langchain.agents import AgentExecutor, create_react_agent
+# LangChain 1.0 환경에서는 다음과 같이 임포트합니다:
+# from langchain_classic.agents import AgentExecutor, create_react_agent
 from langchain_core.prompts import PromptTemplate
 
 # 이전 단계의 모듈들을 불러옵니다.
