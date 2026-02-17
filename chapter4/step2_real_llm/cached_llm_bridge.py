@@ -10,7 +10,7 @@ import hashlib
 from pathlib import Path
 from typing import Any, List, Optional
 
-from langchain_core.language_models import BaseLLM
+from langchain_core.language_models import LLM
 from langchain_core.outputs import Generation, LLMResult
 
 # 부모 디렉터리의 모듈을 불러오기 위한 경로 추가
@@ -20,7 +20,7 @@ from chapter2.llm_interface import LLM
 logger = logging.getLogger(__name__)
 
 
-class CachedLLMBridge(BaseLLM):
+class CachedLLMBridge(LLM):
     """캐싱 기능이 있는 LLM 브리지"""
 
     # Pydantic 필드 정의
