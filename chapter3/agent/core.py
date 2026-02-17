@@ -17,8 +17,14 @@ from base import ToolManager, BaseTool  # 코드 3-3: 도구 관리
 
 # 2장의 통합 LLM 인터페이스
 sys.path.append('../chapter2')
-from llm_interface import LLM        # 코드 2-6
+from llm_interface import LLM        # 코드 2-6~코드 2-9
 
+class SimpleTool(BaseTool):
+    """학습용 간단한 도구 — execute만 최소 구현"""
+
+    def execute(self, input_data: Dict[str, Any]) -> Any:
+        return {"status": "success", "tool": self.name, "input": input_data}
+        
 class Agent:
     """
     모든 구성요소를 통합한 에이전트입니다.
@@ -93,10 +99,10 @@ class Agent:
         """
         # 회의 준비에 필요한 도구들
         tools = [
-            BaseTool(name="database", description="참석자 정보를 조회합니다"),
-            BaseTool(name="calendar", description="일정과 회의실을 관리합니다"),  
-            BaseTool(name="email", description="이메일을 발송합니다"),
-            BaseTool(name="document", description="문서를 생성하고 편집합니다")
+            SimpleTool(name="database", description="참석자 정보를 조회합니다"),
+            SimpleTool(name="calendar", description="일정과 회의실을 관리합니다"),  
+            SimpleTool(name="email", description="이메일을 발송합니다"),
+            SimpleTool(name="document", description="문서를 생성하고 편집합니다")
         ]
         
         # 각 도구를 ToolManager에 등록
