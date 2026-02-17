@@ -14,7 +14,7 @@ from langchain.agents import create_react_agent, AgentExecutor
 from langchain.prompts import PromptTemplate
 
 from cached_llm_bridge import CachedLLMBridge
-from simple_faq_tool import SimpleFAQTool as ImprovedFAQTool
+from simple_faq_tool import SimpleFAQTool
 
 
 class MemoryReActAgent:
@@ -29,7 +29,7 @@ class MemoryReActAgent:
         
         # 기본 컴포넌트들
         self.llm = CachedLLMBridge(provider="mock")
-        self.tools = [ImprovedFAQTool()]
+        self.tools = [SimpleFAQTool()]
         
         # 메모리 타입 선택
         if memory_type == "buffer":
