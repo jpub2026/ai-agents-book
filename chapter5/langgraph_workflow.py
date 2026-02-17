@@ -22,7 +22,8 @@ class WorkflowState(TypedDict):
     policy_result: dict
     final_response: str
     processing_path: list  # 어떤 경로로 처리되었는지 기록
-
+    tech_needed: bool
+    policy_needed: bool
 
 class LangGraphWorkflow:
     """LangGraph를 사용한 조건부 워크플로"""
@@ -56,8 +57,17 @@ class LangGraphWorkflow:
             }
         )
 
+        # 조건부 분기: 기술 분석 후 정책 필요 여부에 따라 분기
+        workflow.add_conditional_edges(
+            "technical",
+            self.after_tech_decision,
+            {
+                "need_policy": "policy",
+                "skip_policy": "finalize"
+            }
+        )
+
         # 일반 에지 추가
-        workflow.add_edge("technical", "policy")
         workflow.add_edge("policy", "finalize")
         workflow.add_edge("finalize", END)
 
