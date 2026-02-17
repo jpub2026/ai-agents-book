@@ -12,6 +12,7 @@ sys.path.append('../step3_tools')
 from langchain.memory import ConversationBufferMemory, ConversationSummaryMemory
 from langchain.agents import create_react_agent, AgentExecutor
 # LangChain 1.0 환경에서는 다음과 같이 임포트합니다:
+# from langchain_classic.memory import ConversationBufferMemory, ConversationSummaryMemory
 # from langchain_classic.agents import AgentExecutor, create_react_agent
 from langchain.prompts import PromptTemplate
 
