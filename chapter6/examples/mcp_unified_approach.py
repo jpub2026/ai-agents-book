@@ -7,8 +7,9 @@ from datetime import datetime
 
 class MCPUnifiedApproach:
     """
-    MCP를 사용한 통합된 AI 서비스 접근
-    모든 서비스를 동일한 JSON-RPC 프로토콜로 호출
+    MCP의 통합 호출 방식을 보여주는 개념적 예제
+    파일 시스템, 데이터베이스 등 외부 도구를 동일한 JSON-RPC 프로토콜로 호출
+    (참고: 실제 MCP는 stdio 또는 Streamable HTTP 전송을 사용합니다)
     """
     
     def __init__(self, host_url: str = "ws://localhost:8080"):
@@ -32,13 +33,13 @@ class MCPUnifiedApproach:
                 # 대기 중인 요청에 응답 전달
                 self.pending_requests[request_id].set_result(data)
                 
-    async def call_any_ai_service(
+    async def call_any_ai_tool(
         self, 
         service_name: str, 
         method: str, 
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """통합된 방식으로 모든 AI 서비스 호출"""
+        """통합된 방식으로 모든 외부 도구 호출"""
         
         request_id = self.generate_request_id()
         
@@ -72,8 +73,8 @@ class MCPUnifiedApproach:
         return f"req_{timestamp}_{unique_id}"
     
     async def query_ai(self, service: str, prompt: str) -> str:
-        """AI 서비스에 통합된 방식으로 질의"""
-        response = await self.call_any_ai_service(
+        """외부 도구에 통합된 방식으로 질의"""
+        response = await self.call_any_ai_tool(
             service_name=service,
             method="complete",
             params={"prompt": prompt}
@@ -83,7 +84,7 @@ class MCPUnifiedApproach:
         if "result" in response:
             return response["result"].get("text", "")
         elif "error" in response:
-            raise Exception(f"Service error: {response['error']['message']}")
+            raise Exception(f"Tool error: {response['error']['message']}")
         return ""
     
     async def close(self):
@@ -97,17 +98,20 @@ async def main():
     await mcp_client.connect()
     
     try:
-        # 모든 서비스를 동일한 방식으로 호출
-        services = ["openai", "claude", "gemini"]
-        prompt = "What is MCP protocol?"
+        # 모든 툴을 동일한 방식으로 호출
+        tools = ["filesystem", "database", "github"]
         
-        for service in services:
+        for tool in tools:
             try:
-                response = await mcp_client.query_ai(service, prompt)
-                print(f"\n{service.upper()} Response:")
-                print(response[:200] + "..." if len(response) > 200 else response)
+                response = await mcp_client.call_any_ai_tool(
+                    service_name=tool,
+                    method="execute",
+                    params={"query": "사용자 정보 조회"}
+                )
+                print(f"\n{tool.upper()} Response:")
+                print(response)
             except Exception as e:
-                print(f"{service.upper()} Error: {e}")
+                print(f"{tool.upper()} Error: {e}")
                 
     finally:
         await mcp_client.close()

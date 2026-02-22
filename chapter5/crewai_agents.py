@@ -73,8 +73,11 @@ class CrewAITeam:
             "technical": technical_expert,
             "policy": policy_advisor
         }
-
-    # CrewAI - 작업 정의
+    
+    """
+    CrewAI 2단계: 작업(Task) 정의
+    목표: 각 전문가가 수행할 구체적인 작업 명세
+    """
     def _create_tasks(self, inquiry):
         """작업 목록 생성""" 
 

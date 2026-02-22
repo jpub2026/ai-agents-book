@@ -16,7 +16,11 @@ class MCPError(Exception):
 
 @dataclass
 class MCPClient:
-    """실제 MCP 통신을 수행하는 프로덕션 레디 클라이언트"""
+    """
+    MCP 프로토콜의 메시지 흐름을 학습하기 위한 시뮬레이션 클라이언트
+    (참고: 실제 MCP는 stdio 또는 Streamable HTTP를 전송 방식으로 사용합니다.
+     여기서 WebSocket을 사용한 것은 교육 목적의 선택입니다.)
+    """
     
     server_url: str = "ws://localhost:3000"
     websocket: Optional[websockets.WebSocketClientProtocol] = None
@@ -50,7 +54,7 @@ class MCPClient:
             "jsonrpc": "2.0",
             "method": "initialize",
             "params": {
-                "protocolVersion": "0.1.0",
+                "protocolVersion": "2024-11-05",
                 "capabilities": {
                     "tools": {},      # 클라이언트가 지원하는 도구
                     "prompts": {}     # 클라이언트가 지원하는 프롬프트
@@ -248,8 +252,8 @@ class MCPClient:
 # 실제 사용 예제
 async def main():
     """MCP 클라이언트 실사용 시나리오"""
-    
-    client = MCPClient("ws://localhost:3000")
+    # 참고: 실제 MCP 구현에서는 stdio(로컬) 또는 HTTP(원격)를 사용합니다
+    client = MCPClient("ws://localhost:3000")# 학습용 WebSocket 연결
     
     try:
         # 1. 연결 수립 

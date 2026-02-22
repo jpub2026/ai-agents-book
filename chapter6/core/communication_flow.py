@@ -6,60 +6,81 @@ class MCPCommunicationFlow:
     """
     
     def demonstrate_flow(self):
-        """MCP 통신 흐름 단계별 예제"""
-        client_to_host = {
-            "step": "1. 연결 요청",
-            "from": "Client (Claude Desktop)",
-            "to": "Host",
-            "message": "안녕하세요, 저는 Claude입니다. 시스템에 참여하고 싶습니다."
-        }
-
         
-        host_response = {
-            "step": "2. 등록 확인",
-            "from": "Host",
-            "to": "Client",
-            "message": "등록되었습니다. 사용 가능한 서비스 목록을 보내드립니다."
+        host_creates_client = {
+            "step": "1. Client 생성",
+            "from": "Host (Claude Desktop)",
+            "action": "설정 파일을 읽고 MCP 서버별로 Client 인스턴스를 생성합니다"
         }
         
-        
-        service_discovery = {
-            "step": "3. 서비스 발견",
-            "available_services": [
-                "database_server: SQL 쿼리 실행 가능",
-                "weather_api: 날씨 정보 제공",
-                "file_system: 파일 읽기/쓰기"
-            ]
-        }
-
-        
-        client_request = {
-            "step": "4. 기능 요청",
+        client_to_server = {
+            "step": "2. 연결 및 초기화",
             "from": "Client",
-            "to": "Host",
-            "message": "데이터베이스에서 사용자 정보를 조회하고 싶습니다"
+            "to": "Server (파일 시스템 MCP 서버)",
+            "message": {
+                "jsonrpc": "2.0",
+                "method": "initialize",
+                "params": {
+                    "protocolVersion": "2024-11-05",
+                    "clientInfo": {"name": "claude-desktop", "version": "1.0"}
+                }
+            }
         }
-        
-        
-        host_routing = {
-            "step": "5. 라우팅",
-            "from": "Host",
-            "to": "Database Server",
-            "message": "Client의 쿼리 요청을 전달합니다"
-        }
-        
         
         server_response = {
-            "step": "6. 결과 반환",
-            "from": "Database Server",
-            "to": "Host",
-            "result": "쿼리 실행 완료: 3명의 사용자 정보"
+            "step": "3. 서버 응답",
+            "from": "Server",
+            "to": "Client",
+            "message": {
+                "jsonrpc": "2.0",
+                "result": {
+                    "serverInfo": {"name": "filesystem-server"},
+                    "capabilities": {"tools": {}}
+                }
+            }
         }
         
+        tool_discovery = {
+            "step": "4. 도구 발견",
+            "from": "Client",
+            "to": "Server",
+            "message": {
+                "jsonrpc": "2.0",
+                "method": "tools/list"
+            },
+            "response": {
+                "tools": [
+                    "read_file: 파일 읽기",
+                    "write_file: 파일 쓰기",
+                    "list_directory: 디렉터리 목록 조회"
+                ]
+            }
+        }
         
-        final_response = {
-            "step": "7. 최종 응답",
-            "from": "Host",
+        tool_execution = {
+            "step": "5. 도구 실행 요청",
+            "from": "Client",
+            "to": "Server",
+            "message": {
+                "jsonrpc": "2.0",
+                "method": "tools/call",
+                "params": {
+                    "name": "read_file",
+                    "arguments": {"path": "/Users/user/report.txt"}
+                }
+            }
+        }
+        
+        tool_result = {
+            "step": "6. 결과 반환",
+            "from": "Server",
             "to": "Client",
-            "result": "요청하신 사용자 정보입니다: [...]"
+            "result": "파일 내용을 성공적으로 읽었습니다: [파일 데이터]"
+        }
+        
+        result_to_host = {
+            "step": "7. Host에 결과 전달",
+            "from": "Client",
+            "to": "Host",
+            "action": "Host가 결과를 받아 사용자 인터페이스에 표시합니다"
         }

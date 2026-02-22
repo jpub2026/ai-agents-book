@@ -1,7 +1,7 @@
 # /mcp_client/main.py
 import asyncio
 from client import MCPClient, OllamaAgent
-from workflow import OllamaWorkflow, MCPWorkflow, WorkflowState
+from workflow import MCPWorkflow, WorkflowState
 
 
 async def run_ollama_agent_example():
@@ -33,34 +33,8 @@ async def run_ollama_agent_example():
         await mcp_client.close()
 
 
-async def run_ollama_workflow_example():
-    """Ollama 워크플로우 실행 예제 - LangGraph 기반"""
-
-    # MCP 클라이언트 초기화
-    mcp_client = MCPClient()
-
-    try:
-        # 도구 발견
-        print("MCP 서버에서 도구 목록을 가져오는 중...")
-        tools = await mcp_client.discover_tools()
-        print(f"발견된 도구: {list(tools.keys())}")
-
-        # Ollama 워크플로우 생성
-        workflow = OllamaWorkflow(mcp_client, model="llama3.2")
-
-        # 워크플로우 실행
-        response = await workflow.run(
-            "VIP-12345 고객의 정보를 조회하고, "
-            "해당 고객에게 프리미엄 노트북 2대와 무선 이어폰 1개를 주문 처리해주세요. "
-            "그리고 오늘의 판매 보고서도 생성해주세요."
-        )
-
-    finally:
-        await mcp_client.close()
-
-
-async def run_legacy_workflow_example():
-    """레거시 워크플로우 실행 예제 (하위 호환성)"""
+async def run_workflow_example():
+    """워크플로우 실행 예제 - LangGraph 기반 순차 워크플로"""
 
     # MCP 클라이언트 초기화
     mcp_client = MCPClient()
@@ -122,8 +96,7 @@ if __name__ == "__main__":
     print("=" * 60)
     print("\n실행 모드 선택:")
     print("  1. Ollama 에이전트 (기본) - 간단한 에이전트 루프")
-    print("  2. Ollama 워크플로우 - LangGraph 기반 복합 작업")
-    print("  3. 레거시 워크플로우 - 결정적 워크플로우 (하위 호환성)")
+    print("  2. MCP 워크플로우 - LangGraph 기반 순차 워크플로")
     print()
 
     # 명령줄 인자로 모드 선택
@@ -133,11 +106,8 @@ if __name__ == "__main__":
         print(">>> Ollama 에이전트 모드로 실행합니다...\n")
         asyncio.run(run_ollama_agent_example())
     elif mode == "2":
-        print(">>> Ollama 워크플로우 모드로 실행합니다...\n")
-        asyncio.run(run_ollama_workflow_example())
-    elif mode == "3":
-        print(">>> 레거시 워크플로우 모드로 실행합니다...\n")
-        asyncio.run(run_legacy_workflow_example())
+        print(">>> MCP 워크플로우 모드로 실행합니다...\n")
+        asyncio.run(run_workflow_example())
     else:
         print(f"알 수 없는 모드: {mode}")
-        print("사용법: python main.py [1|2|3]")
+        print("사용법: python main.py [1|2]")

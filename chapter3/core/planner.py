@@ -42,7 +42,7 @@ class Planner:
         """
     
     def create_plan(self, user_request: str, available_tools: List[str], 
-                   context: Dict = None) -> Dict:
+                   context: Dict = None) -> Dict: # 계획 생성 메인 메서드
         """
         사용자 요청에 대한 실행 계획을 생성합니다
         """
