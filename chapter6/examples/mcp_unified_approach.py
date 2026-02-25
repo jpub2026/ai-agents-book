@@ -98,7 +98,7 @@ async def main():
     await mcp_client.connect()
     
     try:
-        # 모든 툴을 동일한 방식으로 호출
+        # 모든 도구를 동일한 방식으로 호출
         tools = ["filesystem", "database", "github"]
         
         for tool in tools:
