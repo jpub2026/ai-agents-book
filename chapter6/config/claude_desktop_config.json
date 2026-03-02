@@ -9,7 +9,7 @@
             "command": "npx",
             "args": ["-y", "@modelcontextprotocol/server-github"],
             "env": {
-                "GITHUB_TOKEN": "your_github_token"
+                "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token"
             },
             "description": "깃허브 저장소 접근 및 관리"
         },
