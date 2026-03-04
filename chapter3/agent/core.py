@@ -10,14 +10,14 @@ sys.path.append('../core')      # Planner가 있는 경로
 sys.path.append('../memory')     # MemorySystem이 있는 경로
 sys.path.append('../tools')      # ToolManager가 있는 경로
 
-from planner import Planner          # 코드 3-1: 계획 수립
-from executor import Executor        # 코드 3-2: 계획 실행
-from system import MemorySystem      # 코드 3-4: 기억 관리
-from base import ToolManager, BaseTool  # 코드 3-3: 도구 관리
+from planner import Planner          # 코드 3.2.1: 계획 수립
+from executor import Executor        # 코드 3.2.2: 계획 실행
+from system import MemorySystem      # 코드 3.2.4: 기억 관리
+from base import ToolManager, BaseTool  # 코드 3.2.3: 도구 관리
 
 # 2장의 통합 LLM 인터페이스
 sys.path.append('../chapter2')
-from llm_interface import LLM        # 코드 2-6~코드 2-9
+from llm_interface import LLM        # 코드 2-7~코드 2-9
 
 class SimpleTool(BaseTool):
     """학습용 간단한 도구 — execute만 최소 구현"""

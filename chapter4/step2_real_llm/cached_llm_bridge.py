@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 class CachedLLMBridge(LLM):
     """캐싱 기능이 있는 LLM 브리지"""
 
-    # Pydantic 필드 정의
+    # 파이단틱 필드 정의
     llm: Any = None
     _cache: dict = {}
     cache_ttl: Any = None

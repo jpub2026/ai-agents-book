@@ -19,7 +19,6 @@ class WorkflowState:
     errors: List[str] = field(default_factory=list)
     metadata: Dict = field(default_factory=dict)
 
-
 class MCPWorkflow:
     """MCP 도구를 사용하는 워크플로"""
 
