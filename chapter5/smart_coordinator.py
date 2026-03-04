@@ -9,7 +9,6 @@ sys.path.append(str(Path(__file__).parent))
 from basic_collaboration import TechnicalAgent, PolicyAgent
 
 
-# [코드 5-2] 조건부 협업 - 문의 유형 분석
 class SmartCoordinator:
     """문의 유형을 분석하여 적절한 에이전트 선택"""
 

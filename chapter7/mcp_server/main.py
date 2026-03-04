@@ -18,7 +18,7 @@ from middleware import add_metrics_middleware
 
 # FastAPI 앱 생성
 app = FastAPI(
-    title="MCP Server",  # ❷
+    title="MCP Server", 
     description="Model Context Protocol Server - 비즈니스 도구 통합",
     version="1.0.0",
     docs_url="/docs",  # Swagger UI

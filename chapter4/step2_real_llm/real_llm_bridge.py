@@ -23,7 +23,7 @@ from llm_interface import LLM
 class RealLLMBridge(LLM):
     """실제 LLM과 연결된 브리지"""
 
-    # Pydantic 필드 선언
+    # 파이단틱 필드 선언
     llm: Any = None
     provider: str = "auto"
 
@@ -59,21 +59,32 @@ class RealLLMBridge(LLM):
             # 로그: 호출 시작
             logger.debug(f"Starting LLM call: {prompt[:50]}...")
 
-            # 2장의 LLM 인터페이스 사용
+            # 2장의 generate 메서드 호출
             response = self.llm.generate(
                 prompt=prompt,
                 temperature=temperature,
                 max_tokens=max_tokens
             )
-
-            # 로그: 호출 완료
-            logger.debug(f"LLM response received: {response[:50]}...")
-
+            # stop 단어 처리 
+            if stop:
+                for stop_word in stop:
+                    if stop_word in response:
+                        response = response.split(stop_word)[0]
+                        logger.debug(f"Stop word '{stop_word}' found, truncating response")
             return response
-
-        except Exception as e:
+        except Exception as e: 
             logger.error(f"LLM call failed: {e}")
-            raise
+            return "죄송합니다. 일시적인 오류가 발생했습니다."
+    
+    async def _acall(
+              self,
+              prompt: str,
+              stop: Optional[List[str]] = None,
+              **kwargs: Any
+              ) -> str:
+              """비동기 버전"""
+              return self._call(prompt, stop, **kwargs)
+
 
     def _generate(
         self,

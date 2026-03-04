@@ -1,3 +1,8 @@
+# LangChain 1.0 환경
+langchain>=1.0.0
+langchain-core>=1.0.0
+langchain-classic>=0.3.0    # create_react_agent, AgentExecutor, Memory 등 사용 시
+langchain-community>=0.3.0
 # 핵심 패키지
 langchain==0.3.0
 langchain-core==0.3.0
@@ -6,6 +11,6 @@ langchain-community==0.3.0
 # 타입 검증과 데이터 모델링
 pydantic==2.8.2 
 
-# 하이브리드 검색용 (5.4절에서 사용)
+# 하이브리드 검색용 (4.3.2절에서 사용)
 sentence-transformers==2.2.2
 rank-bm25==0.2.2
