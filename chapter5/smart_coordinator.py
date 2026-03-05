@@ -42,7 +42,10 @@ class SmartCoordinator:
                          ("policy" if needs_policy else "unknown"))
         }
 
-    # [코드 5-3] 조건부 협업 - 실행 및 결과 통합
+    """
+    조건부 협업 2단계: 필요한 에이전트만 실ㅇ
+    목표: 효율적인 리소스 활용
+    """
     def process(self, inquiry):
         """스마트 처리""" 
         self.stats["total"] += 1
