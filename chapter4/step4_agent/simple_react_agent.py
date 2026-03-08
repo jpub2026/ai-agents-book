@@ -26,16 +26,16 @@ class SimpleReActAgent:
         print("Initializing ReAct Agent...")
 
         # 1. LLM 준비(캐싱 기능 포함)
-        self.llm = CachedLLMBridge(provider="mock")  # ❶
+        self.llm = CachedLLMBridge(provider="mock")
 
         # 2. 도구 준비
-        self.tools = [ImprovedFAQTool()]
+        self.tools = [HybridFAQTool()]
         print(f"Loaded {len(self.tools)} tool(s)")
 
         # 3. 프롬프트 템플릿 생성
         self.prompt = self._create_prompt()
 
-        # 4. ReAct 에이전트 생성(LangChain 0.3 방식)  # ❷
+        # 4. ReAct 에이전트 생성(LangChain 0.3 방식) 
         self.agent = create_react_agent(
             llm=self.llm,
             tools=self.tools,
@@ -54,7 +54,7 @@ class SimpleReActAgent:
         print("Agent ready!\n")
 
     def _create_prompt(self) -> PromptTemplate:
-        """ReAct 프롬프트 템플릿 생성"""  # ❶
+        """ReAct 프롬프트 템플릿 생성""" 
 
         template = """당신은 친절한 FAQ 도우미입니다.
 
@@ -79,7 +79,7 @@ Final Answer: 사용자에게 친절하고 명확한 답변을 제공합니다.
 
 시작하세요!
 
-{agent_scratchpad}"""  # ❷
+{agent_scratchpad}"""  
 
         return PromptTemplate(
             input_variables=["tools", "tool_names", "input", "agent_scratchpad"],
