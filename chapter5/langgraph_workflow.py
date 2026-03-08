@@ -8,7 +8,10 @@ from pathlib import Path
 from langgraph.graph import StateGraph, END
 from typing import TypedDict
 
-# 상위 디렉토리의 llm_bridge 사용
+# 4장에서 만든 LLM 브리지 재사용
+# 깃허브 리포지토리를 클론한 후 실행하면 정상 작동합니다
+# 리포지토리 구조: ai-agents-book/chapter4/step2_real_llm/cached_llm_bridge.py
+# 또는 독립 실행을 위해 CachedLLMBridge 클래스를 이 파일에 포함할 수도 있습니다
 sys.path.append(str(Path(__file__).parent.parent / 'chapter4'))
 from step2_real_llm.cached_llm_bridge import CachedLLMBridge
 
