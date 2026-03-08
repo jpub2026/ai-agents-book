@@ -1,9 +1,9 @@
 # /mcp_server/metrics.py
-from typing import Dict, List
+from typing import Dict, List, Any
 from datetime import datetime
 
 # 전역 메트릭 저장소
-METRICS: Dict[str, any] = {
+METRICS: Dict[str, Any] = {
     "requests": 0,  
     "errors": 0,  
     "tool_calls": {},  
