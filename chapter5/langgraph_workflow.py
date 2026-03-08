@@ -9,8 +9,8 @@ from langgraph.graph import StateGraph, END
 from typing import TypedDict
 
 # 상위 디렉토리의 llm_bridge 사용
-sys.path.append(str(Path(__file__).parent.parent))
-from llm_bridge import CachedLLMBridge
+sys.path.append(str(Path(__file__).parent.parent / 'chapter4'))
+from step2_real_llm.cached_llm_bridge import CachedLLMBridge
 
 
 # LangGraph: 상태 정의와 워크플로 구조

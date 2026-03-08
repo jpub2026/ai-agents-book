@@ -9,8 +9,8 @@ sys.path.append(str(Path(__file__).parent))
 from smart_coordinator import SmartCoordinator
 
 # 상위 디렉토리의 llm_bridge 사용
-sys.path.append(str(Path(__file__).parent.parent))
-from llm_bridge import CachedLLMBridge
+sys.path.append(str(Path(__file__).parent.parent / 'chapter4'))
+from step2_real_llm.cached_llm_bridge import CachedLLMBridge
 
 
 # 하이브리드 라우팅: 키워드 우선 전략
