@@ -112,7 +112,11 @@ MCP 클라이언트 구현
 ### 필수 요구사항
 
 ```bash
-pip install fastapi uvicorn mcp pydantic httpx
+# MCP 서버 실행에 필요한 패키지
+pip install fastapi uvicorn mcp pydantic httpx psutil
+
+# MCP 클라이언트 실행에 추가로 필요한 패키지
+pip install ollama langgraph
 ```
 
 ### 1. MCP 서버 실행
