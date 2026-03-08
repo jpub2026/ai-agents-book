@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(python -c:*)",
-      "WebFetch(domain:langchain-ai.github.io)"
-    ]
-  }
-}
