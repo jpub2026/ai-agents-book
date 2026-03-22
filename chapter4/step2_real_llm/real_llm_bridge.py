@@ -50,7 +50,7 @@ class RealLLMBridge(LLM):
         self,
         prompt: str,
         stop: Optional[List[str]] = None,
-        temperature: float = 0.7,
+        temperature: float = 0.3,
         max_tokens: int = 500,
         **kwargs: Any
     ) -> str:

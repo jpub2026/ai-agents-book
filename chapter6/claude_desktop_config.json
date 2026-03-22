@@ -18,7 +18,7 @@
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-github"],
       "env": { 
-        "GITHUB_TOKEN": "ghp_your_token_here"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token_here"
       },
       "description": "깃허브 저장소 관리"
     },
