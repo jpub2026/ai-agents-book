@@ -10,7 +10,6 @@ import hashlib
 from pathlib import Path
 from typing import Any, List, Optional
 
-from langchain_core.language_models import LLM
 from langchain_core.outputs import Generation, LLMResult
 
 # 부모 디렉터리의 모듈을 불러오기 위한 경로 추가

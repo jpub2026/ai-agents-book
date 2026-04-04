@@ -297,7 +297,7 @@ class Agent:
             if isinstance(result, dict):
                 # success 필드가 있으면 그 값을 사용
                 # 없으면 data 필드의 존재 여부로 판단
-                if result.get('success', False) or 'data' in result:
+                if result.get('status', False) or 'data' in result:
                     success_count += 1
         
         # 작업이 없는 경우

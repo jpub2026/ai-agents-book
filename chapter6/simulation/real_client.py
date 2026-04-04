@@ -56,8 +56,7 @@ class MCPClient:
             "params": {
                 "protocolVersion": "2024-11-05",
                 "capabilities": {
-                    "tools": {},      # 클라이언트가 지원하는 도구
-                    "prompts": {}     # 클라이언트가 지원하는 프롬프트
+                # 이 예제에서는 별도의 클라이언트 capability를 선언하지 않음
                 },
                 "clientInfo": {
                     "name": "example-client",

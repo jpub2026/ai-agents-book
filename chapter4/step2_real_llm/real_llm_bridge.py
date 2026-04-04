@@ -6,7 +6,6 @@
 
 import sys
 from pathlib import Path
-from langchain_core.language_models import LLM
 from langchain_core.outputs import Generation, LLMResult
 from typing import Any, List, Optional
 import logging

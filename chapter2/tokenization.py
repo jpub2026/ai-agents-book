@@ -9,10 +9,10 @@ class TokenAnalyzer:
         # GPT 모델의 토큰화 방식
         self.encoding = tiktoken.get_encoding("cl100k_base")
         
-        # 토큰당 가격(1,000토큰 기준, USD)
+        # 토큰당 가격(1M토큰 기준, USD)
         self.price_per_1k = {
-            "gpt-3.5": 0.002,
-            "gpt-4": 0.03
+            "gpt-3.5-turbo": 1.5,
+            "gpt-4o-mini": 0.6
         }
     
     def analyze(self, text: str) -> dict:
@@ -26,8 +26,8 @@ class TokenAnalyzer:
         chars_per_token = char_count / token_count if token_count > 0 else 0
         
         # 예상 비용 계산
-        cost_gpt35 = (token_count / 1000) * self.price_per_1k["gpt-3.5"]
-        cost_gpt4 = (token_count / 1000) * self.price_per_1k["gpt-4"]
+        cost_gpt35 = (token_count / 1000000) * self.price_per_1k["gpt-3.5-turbo"]
+        cost_gpt4 = (token_count / 1000000) * self.price_per_1k["gpt-4o-mini"]
         
         return {
             "text": text[:50] + "..." if len(text) > 50 else text,

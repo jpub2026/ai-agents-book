@@ -14,7 +14,7 @@ class OpenAIClient:
             api_key=os.getenv("OPENAI_API_KEY")
         )
         
-    def generate(self, prompt, model="gpt-3.5-turbo"):
+    def generate(self, prompt, model="gpt-4o-mini"):
         """
         OpenAI 모델로 텍스트 생성
         """
