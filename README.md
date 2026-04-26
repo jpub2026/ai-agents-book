@@ -1,6 +1,27 @@
-# AI Agents Book - 예제 코드
+# 처음 만나는 AI 에이전트 with 랭체인 & MCP
 
-《처음 만나는 AI 에이전트 with 랭체인 & MCP》의 예제 코드 리포지토리입니다.
+<p align="center">
+  <a href="https://www.yes24.com/product/goods/187043724">
+    <img src="./assets/book-cover.jpeg" alt="처음 만나는 AI 에이전트 with 랭체인 & MCP 표지" width="360">
+  </a>
+</p>
+
+<p align="center">
+  <strong>스토리로 이해하고 코드로 완성하는 AI 에이전트 실습 가이드</strong><br>
+  랭체인 기반 RAG 실습부터 랭그래프와 CrewAI 멀티 에이전트 설계, FastAPI 기반 MCP 서버 구축까지 다룹니다.
+</p>
+
+<p align="center">
+  <a href="https://www.yes24.com/product/goods/187043724"><strong>YES24에서 책 보기</strong></a>
+  ·
+  <a href="#챕터별-구성"><strong>예제 코드 둘러보기</strong></a>
+  ·
+  <a href="./ERRATA.md"><strong>정오표 확인</strong></a>
+</p>
+
+---
+
+이 리포지토리는 《처음 만나는 AI 에이전트 with 랭체인 & MCP》의 예제 코드와 보조 자료를 담고 있습니다. 책을 따라 실습하거나, 필요한 챕터만 골라 AI 에이전트의 핵심 구성요소를 빠르게 확인할 수 있습니다.
 
 ## 챕터별 구성
 
