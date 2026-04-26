@@ -1,7 +1,7 @@
 # 처음 만나는 AI 에이전트 with 랭체인 & MCP
 
 <p align="center">
-  <a href="https://www.yes24.com/product/goods/187043724">
+  <a href="https://www.yes24.com/product/goods/187043724" target="_blank" rel="noopener noreferrer">
     <img src="./assets/book-cover.jpeg" alt="처음 만나는 AI 에이전트 with 랭체인 & MCP 표지" width="360">
   </a>
 </p>
@@ -12,11 +12,11 @@
 </p>
 
 <p align="center">
-  <a href="https://www.yes24.com/product/goods/187043724"><strong>YES24</strong></a>
+  <a href="https://www.yes24.com/product/goods/187043724" target="_blank" rel="noopener noreferrer"><strong>YES24</strong></a>
   ·
-  <a href="https://product.kyobobook.co.kr/detail/S000219733194"><strong>교보문고</strong></a>
+  <a href="https://product.kyobobook.co.kr/detail/S000219733194" target="_blank" rel="noopener noreferrer"><strong>교보문고</strong></a>
   ·
-  <a href="https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=390937768"><strong>알라딘</strong></a>
+  <a href="https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=390937768" target="_blank" rel="noopener noreferrer"><strong>알라딘</strong></a>
   ·
   <a href="#챕터별-구성"><strong>예제 코드 둘러보기</strong></a>
   ·
