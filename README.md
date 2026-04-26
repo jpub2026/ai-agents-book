@@ -12,7 +12,11 @@
 </p>
 
 <p align="center">
-  <a href="https://www.yes24.com/product/goods/187043724"><strong>YES24에서 책 보기</strong></a>
+  <a href="https://www.yes24.com/product/goods/187043724"><strong>YES24</strong></a>
+  ·
+  <a href="https://newtip.net/click.php?m=kbbook&a=A100693831&l=0000"><strong>교보문고</strong></a>
+  ·
+  <a href="https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=390937768"><strong>알라딘</strong></a>
   ·
   <a href="#챕터별-구성"><strong>예제 코드 둘러보기</strong></a>
   ·
