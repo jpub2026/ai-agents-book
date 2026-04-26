@@ -14,7 +14,7 @@
 <p align="center">
   <a href="https://www.yes24.com/product/goods/187043724"><strong>YES24</strong></a>
   ·
-  <a href="https://newtip.net/click.php?m=kbbook&a=A100693831&l=0000"><strong>교보문고</strong></a>
+  <a href="https://product.kyobobook.co.kr/detail/S000219733194"><strong>교보문고</strong></a>
   ·
   <a href="https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=390937768"><strong>알라딘</strong></a>
   ·
