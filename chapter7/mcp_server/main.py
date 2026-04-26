@@ -21,7 +21,7 @@ app = FastAPI(
     title="MCP Server", 
     description="Model Context Protocol Server - 비즈니스 도구 통합",
     version="1.0.0",
-    docs_url="/docs",  # Swagger UI
+    docs_url="/docs",  # 스웨거 UI
     redoc_url="/redoc"  # ReDoc
 )
 
@@ -55,7 +55,7 @@ def register_tool(
         )  
     }
     
-    print(f" 도구 등록: {name}")  
+    print(f" 도구 등록: {name}")
     
 # 서버 시작 시 도구 등록
 @app.on_event("startup")  
@@ -159,17 +159,17 @@ async def register_all_tools():
         }
     )
     
-    print(f" 총 {len(TOOLS)}개 도구 등록 완료")
+    print(f"[도구 등록 완료] 총 {len(TOOLS)}개")
 
 if __name__ == "__main__":
     import uvicorn
-        
+
     print(" MCP 서버 시작")
     print(f" - 주소: http://localhost:8000")
     print(f" - 문서: http://localhost:8000/docs")
     print(f" - 헬스체크: http://localhost:8000/health")
     print(f" - 등록 도구: {', '.join(TOOLS.keys())}")
-    
+
     uvicorn.run(
         app,
         host="0.0.0.0",

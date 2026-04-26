@@ -43,7 +43,7 @@ class SmartCoordinator:
         }
 
     """
-    조건부 협업 2단계: 필요한 에이전트만 실ㅇ
+    조건부 협업 2단계: 필요한 에이전트만 실행
     목표: 효율적인 리소스 활용
     """
     def process(self, inquiry):

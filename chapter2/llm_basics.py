@@ -50,7 +50,7 @@ class SimpleLLMSimulator:
             # 확률 평준화
             return [1/len(probs)] * len(probs)
 
-# 시뮬레이터 테스트
-simulator = SimpleLLMSimulator()
-print(simulator.predict_next("오늘 날씨가"))
-print(simulator.predict_next("파이썬은"))
+if __name__ == "__main__":
+    simulator = SimpleLLMSimulator()
+    print(simulator.predict_next("오늘 날씨가"))
+    print(simulator.predict_next("파이썬은"))

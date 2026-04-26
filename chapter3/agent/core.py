@@ -4,11 +4,22 @@ import json
 import time
 
 # 3.2절에서 구현한 구성요소들을 불러옵니다.
-# 각 구성요소는 독립적으로 개발되었지만, 이제 하나의 시스템으로 통합됩니다
+# 각 구성요소는 독립적으로 개발되었지만, 이제 하나의 시스템으로 통합됩니다.
+# 경로가 현재 작업 디렉터리(CWD)에 종속되지 않도록 __file__ 기준으로 sys.path 를 구성합니다.
+import os
 import sys
-sys.path.append('../core')      # Planner가 있는 경로
-sys.path.append('../memory')     # MemorySystem이 있는 경로
-sys.path.append('../tools')      # ToolManager가 있는 경로
+
+_CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+_CHAPTER3_DIR = os.path.dirname(_CURRENT_DIR)           # .../chapter3
+_REPO_ROOT = os.path.dirname(_CHAPTER3_DIR)             # .../ai-agents-book
+for _p in (
+    os.path.join(_CHAPTER3_DIR, "core"),
+    os.path.join(_CHAPTER3_DIR, "memory"),
+    os.path.join(_CHAPTER3_DIR, "tools"),
+    os.path.join(_REPO_ROOT, "chapter2"),
+):
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
 
 from planner import Planner          # 코드 3.2.1: 계획 수립
 from executor import Executor        # 코드 3.2.2: 계획 실행
@@ -16,7 +27,6 @@ from system import MemorySystem      # 코드 3.2.4: 기억 관리
 from base import ToolManager, BaseTool  # 코드 3.2.3: 도구 관리
 
 # 2장의 통합 LLM 인터페이스
-sys.path.append('../chapter2')
 from llm_interface import LLM        # 코드 2-7~코드 2-9
 
 class SimpleTool(BaseTool):

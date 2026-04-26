@@ -4,8 +4,8 @@ CrewAI 1단계: 전문가 에이전트 정의
 
 
 설치 필요: pip install crewai langchain-openai python-dotenv
+실행 전 OPENAI_API_KEY 환경변수 설정 필요
 """
-
 from crewai import Agent, Task, Crew, Process
 from langchain_openai import ChatOpenAI
 
@@ -36,14 +36,14 @@ class CrewAITeam:
         self.agents = self._create_agents()
 
     def _create_agents(self):
-        """에이전트 팀 구성""" 
+        """에이전트 팀 구성"""
 
         analyst = Agent(
-            role='Customer Inquiry Analyst', 
+            role='Customer Inquiry Analyst',
             goal='고객 문의를 정확히 분석하고 분류하기',
             backstory="""당신은 5년 경력의 고객 서비스 분석가입니다.
             수천 건의 문의를 처리한 경험으로 고객의 진짜 니즈를 빠르게 파악합니다.
-            문의 유형, 긴급도, 감정 상태를 정확히 분석하는 전문가입니다.""", 
+            문의 유형, 긴급도, 감정 상태를 정확히 분석하는 전문가입니다.""",
             verbose=True,
             llm=self.llm
         )
@@ -73,13 +73,13 @@ class CrewAITeam:
             "technical": technical_expert,
             "policy": policy_advisor
         }
-    
+
     """
     CrewAI 2단계: 작업(Task) 정의
     목표: 각 전문가가 수행할 구체적인 작업 명세
     """
     def _create_tasks(self, inquiry):
-        """작업 목록 생성""" 
+        """작업 목록 생성"""
 
         # Task 1: 초기 분석
         analysis_task = Task(
@@ -114,7 +114,7 @@ class CrewAITeam:
             """,
             expected_output="기술 진단 결과와 권장 해결 방법",
             agent=self.agents["technical"],
-            context=[analysis_task] 
+            context=[analysis_task]
         )
 
         # Task 3: 정책 확인 및 최종 제안
@@ -132,7 +132,7 @@ class CrewAITeam:
             """,
             expected_output="적용 가능한 정책과 고객 맞춤 제안",
             agent=self.agents["policy"],
-            context=[analysis_task, technical_task] 
+            context=[analysis_task, technical_task]
         )
 
         return [analysis_task, technical_task, policy_task]
@@ -152,7 +152,7 @@ class CrewAITeam:
         crew = Crew(
             agents=list(self.agents.values()),
             tasks=self._create_tasks(inquiry),
-            process=Process.sequential, 
+            process=Process.sequential,
             verbose=True
         )
 

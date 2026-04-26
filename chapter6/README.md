@@ -87,46 +87,61 @@ MCP를 활용한 통합 접근법
 실제 MCP 클라이언트 동작 시뮬레이션
 - MCP 서버 연결
 - 도구 호출 테스트
+- 참고: WebSocket을 이용한 학습용 예제이며, 실제 실행에는 ws://localhost:3000 으로
+  동작하는 MCP 호환 WebSocket 서버가 필요합니다 (stdio/HTTP가 실제 MCP 표준).
+
+### 6. Config (설정 예제)
+- `config/claude_desktop_config.json`, `claude_desktop_config.json`: Claude Desktop용 MCP 서버 설정 예시
+- `config/cursor_mcp_config.json`: Cursor IDE용 MCP 설정 예시
+- `mcp.json`, `mcp_config.json`: 본문에서 언급되는 통합 설정 참고용
+
+> 설정 파일 안의 `/path/to/...`, `ghp_your_token_here`, `your_api_key` 등은 **샘플 자리표시자**이므로
+> 실제 환경에 맞게 수정한 뒤 사용해주세요.
 
 ## 사용 방법
 
 ### 필수 요구사항
 
 ```bash
-pip install langchain langgraph crewai mcp
+pip install langchain langchain-core langgraph crewai websockets
+# 전통적 통합 예제를 실행하려면 추가 설치가 필요합니다
+pip install openai anthropic google-generativeai
 ```
 
 ### 예제 실행
 
+> 각 스크립트는 리포지토리 루트에서 실행하는 것을 권장합니다.
+
 #### 1. 전통적 통합 방식 vs MCP 통합 비교
 ```bash
-cd examples
+# 전통적 방식 (OpenAI/Anthropic/Gemini API 키 필요)
+python chapter6/examples/traditional_integration.py
 
-# 전통적 방식
-python traditional_integration.py
-
-# MCP 통합 방식
-python mcp_unified_approach.py
+# MCP 통합 방식 (실제 실행에는 MCP 호환 서버 필요)
+python chapter6/examples/mcp_unified_approach.py
 ```
 
 #### 2. 프레임워크별 어댑터 테스트
 ```bash
-cd adapters
-
-# LangChain 어댑터
-python langchain_mcp_adapter.py
+# LangChain 어댑터 (모의 응답 출력)
+python chapter6/adapters/langchain_mcp_adapter.py
 
 # LangGraph 어댑터
-python langgraph_mcp_node.py
+python chapter6/adapters/langgraph_mcp_node.py
 
 # CrewAI 어댑터
-python crewai_mcp_integration.py
+python chapter6/adapters/crewai_mcp_integration.py
 ```
 
 #### 3. 클라이언트 시뮬레이션
 ```bash
-cd simulation
-python real_client.py
+python chapter6/simulation/real_client.py
+```
+
+#### 4. 프로토콜 구조 / 통신 흐름 확인
+```bash
+python chapter6/protocol/jsonrpc_structure.py
+python chapter6/core/communication_flow.py
 ```
 
 ## 학습 포인트
@@ -147,7 +162,7 @@ python real_client.py
 
 - Chapter 5: 멀티 에이전트 협업 (기반 지식)
 - Chapter 7: MCP 서버/클라이언트 구현
-- Chapter 8: 프로덕션 배포
+- Appendix A: 프로덕션 배포 (옵션)
 
 ## 참고자료
 

@@ -2,6 +2,7 @@ from crewai import Agent, Task, Crew, Process
 from crewai.tools import BaseTool
 from pydantic import Field
 
+
 class MCPToolAdapter(BaseTool):
     """MCP 서버를 CrewAI Tool로 사용하기 위한 어댑터"""
     name: str = "mcp_tool"
@@ -59,5 +60,5 @@ def create_mcp_enabled_crew():
         tasks=[research_task],
         process=Process.sequential
     )
-    
+
     return crew

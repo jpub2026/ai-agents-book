@@ -2,12 +2,20 @@
 메모리가 있는 ReAct 에이전트
 목표: 이전 대화를 기억하고 맥락을 이해하기
 """
+import os
 import sys
+from pathlib import Path
 
-# 부모 디렉토리의 모듈을 불러오기 위한 위한 경로 추가
-sys.path.append('..')
-sys.path.append('../step2_real_llm')
-sys.path.append('../step3_tools')
+# 부모 디렉터리의 모듈을 불러오기 위해 __file__ 기준으로 경로를 추가합니다.
+_CH4_DIR = Path(__file__).resolve().parent.parent
+for _p in (
+    _CH4_DIR,
+    _CH4_DIR / "step2_real_llm",
+    _CH4_DIR / "step3_tools",
+):
+    _s = str(_p)
+    if _s not in sys.path:
+        sys.path.insert(0, _s)
 
 from langchain.memory import ConversationBufferMemory, ConversationSummaryMemory
 from langchain.agents import create_react_agent, AgentExecutor
@@ -128,3 +136,11 @@ class MemoryReActAgent:
         else:
             print("(empty)")
         print("=" * 40 + "\n")
+
+
+if __name__ == "__main__":
+    agent = MemoryReActAgent(memory_type="buffer")
+
+    print(agent.chat("환불 정책이 어떻게 되나요?"))
+    print(agent.chat("그러면 교환은요?"))
+    agent.show_memory()

@@ -121,39 +121,39 @@ pip install ollama langgraph
 
 ### 1. MCP 서버 실행
 
+서버 스크립트는 `chapter7/mcp_server` 내부 모듈을 import 하므로, **반드시 해당 디렉터리에서**
+또는 `uvicorn`에 모듈 경로를 명시하여 실행해야 합니다.
+
 ```bash
-cd mcp_server
+# 방법 1: 디렉터리 이동 후 실행
+cd chapter7/mcp_server
 python main.py
 
-# 또는 uvicorn 직접 실행
-uvicorn main:app --reload --port 8000
+# 방법 2: 리포지토리 루트에서 uvicorn 사용
+uvicorn main:app --reload --port 8000 --app-dir chapter7/mcp_server
 ```
 
-서버가 `http://localhost:8000`에서 실행됩니다.
+서버가 `http://localhost:8000`에서 실행됩니다. 도구는 FastAPI `startup` 이벤트 시점에 등록되므로,
+첫 요청 직전의 로그에서 `도구 등록 완료` 메시지를 확인할 수 있습니다.
 
 ### 2. MCP 클라이언트 실행
 
-별도 터미널에서:
+**반드시 서버가 먼저 기동된 상태**에서 별도 터미널에서 실행하세요.
 
 ```bash
-cd mcp_client
-python main.py
+# 방법 1: 디렉터리 이동 후 실행
+cd chapter7/mcp_client
+python main.py       # Ollama 에이전트 모드(기본)
+python main.py 2     # LangGraph 워크플로우 모드
+
+# 방법 2: 리포지토리 루트에서 실행
+python chapter7/mcp_client/main.py
 ```
 
 ### 3. 개별 도구 테스트
 
-```bash
-cd tools
-
-# 고객 도구 테스트
-python customer.py
-
-# 주문 도구 테스트
-python order.py
-
-# 리포트 도구 테스트
-python report.py
-```
+도구는 모듈 함수로만 정의되어 있어 직접 실행해도 출력이 없습니다.
+대신 서버를 띄운 뒤 `/mcp/tools`, `/mcp/execute` 엔드포인트로 호출하세요.
 
 ### 4. API 문서 확인
 
@@ -210,8 +210,9 @@ async def my_workflow(client):
 
 ### 메트릭 확인
 ```bash
-# 서버 메트릭 엔드포인트
-curl http://localhost:8000/metrics
+# 서버 메트릭 / 헬스체크 엔드포인트 (프리픽스 /mcp 사용)
+curl http://localhost:8000/mcp/metrics
+curl http://localhost:8000/mcp/health
 ```
 
 ### 로그 확인
@@ -220,8 +221,8 @@ curl http://localhost:8000/metrics
 ## 관련 챕터
 
 - Chapter 6: MCP 통합 (이론 및 어댑터)
-- Chapter 8: 프로덕션 배포 (Docker, 모니터링)
-- Chapter 9: 최적화 (성능 향상)
+- Appendix A: 프로덕션 배포 (Docker, 모니터링) — 옵션
+- Appendix B: 최적화 (성능 향상) — 옵션
 
 ## 참고사항
 
@@ -243,4 +244,5 @@ curl http://localhost:8000/metrics
 
 ## 다음 단계
 
-Chapter 8에서 이 서버를 Docker 컨테이너로 배포하고 프로덕션 환경에서 운영하는 방법을 학습합니다.
+본문에는 포함되지 않았지만, 본 예제를 확장해 Docker 컨테이너로 배포하거나 캐싱·비동기 최적화를 적용하는
+내용은 **Appendix A/B**에 정리되어 있으니 참고해주세요.

@@ -1,4 +1,9 @@
-import tiktoken
+try:
+    import tiktoken
+except ImportError as _e:
+    raise ImportError(
+        "tiktoken 패키지가 필요합니다. `pip install tiktoken` 으로 설치해 주세요."
+    ) from _e
 
 class TokenAnalyzer:
     """
@@ -40,17 +45,18 @@ class TokenAnalyzer:
             }
         }
 
-# 다양한 언어 테스트
-analyzer = TokenAnalyzer()
+if __name__ == "__main__":
+    # 다양한 언어 테스트
+    analyzer = TokenAnalyzer()
 
-texts = {
-    "영어": "Hello, how are you?",
-    "한글": "안녕하세요, 어떻게 지내세요?",
-    "코드": "def hello(): print('Hello')"
-}
+    texts = {
+        "영어": "Hello, how are you?",
+        "한글": "안녕하세요, 어떻게 지내세요?",
+        "코드": "def hello(): print('Hello')",
+    }
 
-for lang, text in texts.items():
-    result = analyzer.analyze(text)
-    print(f"\n{lang}: {text}")
-    print(f"  토큰 수: {result['token_count']}")
-    print(f"  문자당 토큰: {result['chars_per_token']}")
+    for lang, text in texts.items():
+        result = analyzer.analyze(text)
+        print(f"\n{lang}: {text}")
+        print(f"  토큰 수: {result['token_count']}")
+        print(f"  문자당 토큰: {result['chars_per_token']}")

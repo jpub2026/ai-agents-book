@@ -1,8 +1,16 @@
 import json
-from typing import Dict, List, Any
-# 코드 2-6의 통합 LLM 인터페이스를 불러옵니다.
+import os
 import sys
-sys.path.append('../chapter2')  # 2장 코드 경로 추가
+from typing import Dict, List, Any
+
+# 코드 2-6의 통합 LLM 인터페이스를 불러옵니다.
+# 현재 작업 디렉터리에 영향받지 않도록 __file__ 기준으로 경로를 추가합니다.
+_CHAPTER2_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, "chapter2")
+)
+if _CHAPTER2_DIR not in sys.path:
+    sys.path.insert(0, _CHAPTER2_DIR)
+
 from llm_interface import LLM
 
 class Planner:

@@ -38,12 +38,13 @@ chapter4/
 
 ## 실행하기
 
+> 아래 명령은 **리포지토리 루트에서 실행**하는 것을 권장합니다. `sys.path` 를 `__file__` 기준으로 구성해 두어 어느 위치에서 실행해도 동작합니다.
+
 ### 단계 1: 기본 브리지
 가장 간단한 LLM 브리지 구현
 
 ```bash
-cd step1_basic
-python simple_llm_bridge.py
+python chapter4/step1_basic/simple_llm_bridge.py
 ```
 
 **핵심 개념:**
@@ -52,12 +53,11 @@ python simple_llm_bridge.py
 - Mock 응답으로 테스트
 
 ### 단계 2: 실제 LLM 통합
-Chapter 2의 LLM 인터페이스 활용
+Chapter 2의 LLM 인터페이스 활용 (자동으로 Ollama → OpenAI → Mock 순 탐색)
 
 ```bash
-cd step2_real_llm
-python real_llm_bridge.py
-python cached_llm_bridge.py
+python -i chapter4/step2_real_llm/real_llm_bridge.py
+python -i chapter4/step2_real_llm/cached_llm_bridge.py
 ```
 
 **핵심 개념:**
@@ -66,12 +66,11 @@ python cached_llm_bridge.py
 - 비용 절감
 
 ### 단계 3: 도구 시스템
-외부 기능 통합
+외부 기능 통합 (hybrid 버전은 sentence-transformers 가 필요합니다)
 
 ```bash
-cd step3_tools
-python simple_faq_tool.py
-python hybrid_faq_tool.py
+python -i chapter4/step3_tools/simple_faq_tool.py
+python -i chapter4/step3_tools/hybrid_faq_tool.py
 ```
 
 **핵심 개념:**
@@ -83,9 +82,8 @@ python hybrid_faq_tool.py
 추론-행동 사이클
 
 ```bash
-cd step4_agent
-python simple_react_agent.py
-python memory_agent.py
+python chapter4/step4_agent/simple_react_agent.py
+python chapter4/step4_agent/memory_agent.py
 ```
 
 **핵심 개념:**
@@ -97,8 +95,7 @@ python memory_agent.py
 실전 배포 준비
 
 ```bash
-cd step5_production
-python extended_system.py
+python chapter4/step5_production/extended_system.py
 ```
 
 **핵심 개념:**

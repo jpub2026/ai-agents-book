@@ -1,6 +1,16 @@
-from langgraph.graph import StateGraph, END
-from typing import TypedDict, Annotated, Sequence
+"""
+LangGraph 프레임워크로 에이전트 워크플로우를 구성하는 예제.
+실행 전 `pip install langgraph` 가 필요합니다.
+"""
 import operator
+from typing import TypedDict, Annotated, Sequence
+
+try:
+    from langgraph.graph import StateGraph, END
+except ImportError as _e:
+    raise ImportError(
+        "langgraph 패키지가 필요합니다. `pip install langgraph` 로 설치해 주세요."
+    ) from _e
 
 class AgentState(TypedDict):
     """
@@ -80,5 +90,17 @@ def create_langgraph_agent():
 
     # 컴파일하여 실행 가능한 에이전트로 변환
     app = workflow.compile()
-    
+
     return app
+
+
+if __name__ == "__main__":
+    app = create_langgraph_agent()
+    initial_state: AgentState = {
+        "messages": [],
+        "current_step": "",
+        "plan": [],
+        "results": {"success": True},
+    }
+    final_state = app.invoke(initial_state)
+    print("최종 상태:", final_state)

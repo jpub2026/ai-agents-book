@@ -50,7 +50,10 @@ class PromptTechniques:
         """
         return prompt
 
-# 각 기법의 프롬프트 확인
-techniques = PromptTechniques()
-print("Zero-shot:", techniques.zero_shot_example())
-print("\nFew-shot:", techniques.few_shot_example())
+if __name__ == "__main__":
+    # 각 기법의 프롬프트 확인
+    techniques = PromptTechniques()
+    print("Zero-shot:", techniques.zero_shot_example())
+    print("\nFew-shot:", techniques.few_shot_example())
+    print("\nChain-of-Thought:", techniques.chain_of_thought_example())
+    print("\nRole Playing:", techniques.role_playing_example())

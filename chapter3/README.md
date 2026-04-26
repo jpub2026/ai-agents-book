@@ -39,31 +39,23 @@ chapter3/
 
 ## 실행하기
 
-### 1. 핵심 구성요소 개별 테스트
+> 아래 명령은 **리포지토리 루트 또는 `chapter3/` 안 어디에서 실행해도** 상대 경로가 꼬이지 않도록 `__file__` 기준으로 sys.path 를 구성해 두었습니다.
+
+### 1. 통합 에이전트 실행 (권장)
 
 ```bash
-# 메모리 시스템
-cd memory
-python system.py
-
-# 도구 관리자
-cd tools
-python base.py
-
-# 계획 수립기
-cd core
-python planner.py
-
-# 실행 엔진
-cd core
-python executor.py
+python chapter3/agent/example.py
 ```
 
-### 2. 통합 에이전트 실행 (권장)
+본 챕터의 전체 흐름(기억 검색 → 계획 → 실행 → 경험 저장 → 응답)을 한 번에 체험할 수 있습니다.
+
+### 2. 핵심 구성요소 개별 테스트
+
+아래 모듈들은 라이브러리 성격이라 `if __name__ == "__main__":` 데모가 없는 것도 있습니다. 클래스 단위로 확인하고 싶을 때는 `python -i` 모드로 import 해 주세요.
 
 ```bash
-cd agent
-python example.py
+python -i chapter3/core/planner.py         # Planner 클래스 대화형 확인
+python -i chapter3/memory/system.py        # MemorySystem 클래스 대화형 확인
 ```
 
 이 예제는 모든 구성요소를 통합하여 실제 에이전트가 어떻게 작동하는지 보여줍니다:
@@ -75,18 +67,17 @@ python example.py
 
 ### 3. 프레임워크별 에이전트
 
+각 프레임워크 예제는 추가 패키지와 `OPENAI_API_KEY` 가 필요합니다. 환경이 준비되지 않은 경우 친절한 안내 메시지만 출력하고 조용히 종료되도록 구성해 두었습니다.
+
 ```bash
-# LangChain 에이전트
-cd langchain
-python agent.py
+# LangChain 에이전트 (langchain-openai, langchain-community, duckduckgo-search 필요)
+python chapter3/langchain/agent.py
 
-# LangGraph 워크플로우
-cd langgraph
-python workflow.py
+# LangGraph 워크플로우 (langgraph 필요)
+python chapter3/langgraph/workflow.py
 
-# CrewAI 팀 에이전트
-cd crewai
-python team.py
+# CrewAI 팀 에이전트 (crewai, crewai-tools 필요)
+python chapter3/crewai/team.py
 ```
 
 ## 요구사항
@@ -99,13 +90,13 @@ pip install requests
 ### 프레임워크 (선택)
 ```bash
 # LangChain & LangGraph
-pip install langchain langgraph langchain-openai
+pip install langchain langchain-core langchain-community langchain-openai langgraph duckduckgo-search
 
 # CrewAI
 pip install crewai crewai-tools
 
 # 모두 설치
-pip install langchain langgraph crewai crewai-tools
+pip install langchain langchain-core langchain-community langchain-openai langgraph duckduckgo-search crewai crewai-tools
 ```
 
 ### LLM 설정

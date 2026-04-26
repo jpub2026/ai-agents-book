@@ -82,25 +82,24 @@ pip install langgraph crewai langchain-openai python-dotenv
 
 ### 예제 실행
 
-각 예제는 독립적으로 실행 가능합니다:
+> 각 스크립트는 `__file__` 기준으로 경로를 구성하므로 리포지토리 루트에서 실행하는 것을 권장합니다.
 
 ```bash
-cd chapter5
-
 # 기본 협업
-python basic_collaboration.py
+python chapter5/basic_collaboration.py
 
 # 조건부 협업
-python smart_coordinator.py
+python chapter5/smart_coordinator.py
 
-# LangGraph 워크플로우
-python langgraph_workflow.py
+# LangGraph 워크플로우 (langgraph 필요)
+python chapter5/langgraph_workflow.py
 
 # CrewAI 팀 협업 (OpenAI API 키 필요)
-python crewai_agents.py
+export OPENAI_API_KEY="sk-..."
+python chapter5/crewai_agents.py
 
 # 하이브리드 시스템
-python hybrid_router.py
+python chapter5/hybrid_router.py
 ```
 
 ## 참고사항

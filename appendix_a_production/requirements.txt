@@ -1,0 +1,5 @@
+# Appendix A: 프로덕션 배포 예제용 의존성
+# main.py, logging_setup.py, slack_notifier.py, config.py 실행에 필요
+
+python-dotenv>=1.0.0
+slack-sdk>=3.27.0

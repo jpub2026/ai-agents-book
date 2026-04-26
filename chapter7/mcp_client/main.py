@@ -1,5 +1,13 @@
 # /mcp_client/main.py
 import asyncio
+import os
+import sys
+
+# 같은 디렉터리의 모듈을 import할 수 있도록 경로 추가
+_CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+if _CURRENT_DIR not in sys.path:
+    sys.path.insert(0, _CURRENT_DIR)
+
 from client import MCPClient, OllamaAgent
 from workflow import MCPWorkflow, WorkflowState
 

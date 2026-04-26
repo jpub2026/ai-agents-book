@@ -6,6 +6,7 @@ from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, field
 from enum import Enum
 
+
 class MCPError(Exception):
     """MCP 관련 에러를 위한 커스텀 예외 클래스"""
     def __init__(self, code: int, message: str, data: Any = None):

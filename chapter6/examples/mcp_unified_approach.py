@@ -5,44 +5,45 @@ from typing import Any, Dict, Optional
 import uuid
 from datetime import datetime
 
+
 class MCPUnifiedApproach:
     """
     MCP의 통합 호출 방식을 보여주는 개념적 예제
     파일 시스템, 데이터베이스 등 외부 도구를 동일한 JSON-RPC 프로토콜로 호출
     (참고: 실제 MCP는 stdio 또는 Streamable HTTP 전송을 사용합니다)
     """
-    
+
     def __init__(self, host_url: str = "ws://localhost:8080"):
         self.host_url = host_url
         self.websocket = None
         self.pending_requests = {}
-        
+
     async def connect(self):
         """MCP Host에 연결"""
         self.websocket = await websockets.connect(self.host_url)
         # 연결 후 백그라운드에서 응답 수신 시작
         asyncio.create_task(self._receive_messages())
-        
+
     async def _receive_messages(self):
         """응답 메시지를 비동기로 수신"""
         async for message in self.websocket:
             data = json.loads(message)
             request_id = data.get("id")
-            
+
             if request_id in self.pending_requests:
                 # 대기 중인 요청에 응답 전달
                 self.pending_requests[request_id].set_result(data)
-                
+
     async def call_any_ai_tool(
-        self, 
-        service_name: str, 
-        method: str, 
+        self,
+        service_name: str,
+        method: str,
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
         """통합된 방식으로 모든 외부 도구 호출"""
-        
+
         request_id = self.generate_request_id()
-        
+
         # JSON-RPC 2.0 표준 형식의 요청 생성
         request = {
             "jsonrpc": "2.0",
@@ -50,11 +51,11 @@ class MCPUnifiedApproach:
             "params": params,
             "id": request_id
         }
-        
+
         # 응답을 기다릴 Future 생성
         future = asyncio.Future()
         self.pending_requests[request_id] = future
-        
+
         # 요청 전송
         await self.websocket.send(json.dumps(request))
 
@@ -65,13 +66,13 @@ class MCPUnifiedApproach:
         except asyncio.TimeoutError:
             del self.pending_requests[request_id]
             raise TimeoutError(f"Request {request_id} timed out")
-    
+
     def generate_request_id(self) -> str:
         """고유한 요청 ID 생성"""
         timestamp = int(datetime.now().timestamp() * 1000000)
         unique_id = str(uuid.uuid4())[:8]
         return f"req_{timestamp}_{unique_id}"
-    
+
     async def query_ai(self, service: str, prompt: str) -> str:
         """외부 도구에 통합된 방식으로 질의"""
         response = await self.call_any_ai_tool(
@@ -79,28 +80,29 @@ class MCPUnifiedApproach:
             method="complete",
             params={"prompt": prompt}
         )
-        
+
         # 통합된 응답 처리
         if "result" in response:
             return response["result"].get("text", "")
         elif "error" in response:
             raise Exception(f"Tool error: {response['error']['message']}")
         return ""
-    
+
     async def close(self):
         """연결 종료"""
         if self.websocket:
             await self.websocket.close()
 
+
 # 실제 사용 예제
 async def main():
     mcp_client = MCPUnifiedApproach()
     await mcp_client.connect()
-    
+
     try:
         # 모든 도구를 동일한 방식으로 호출
         tools = ["filesystem", "database", "github"]
-        
+
         for tool in tools:
             try:
                 response = await mcp_client.call_any_ai_tool(
@@ -112,9 +114,10 @@ async def main():
                 print(response)
             except Exception as e:
                 print(f"{tool.upper()} Error: {e}")
-                
+
     finally:
         await mcp_client.close()
+
 
 if __name__ == "__main__":
     asyncio.run(main())

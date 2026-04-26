@@ -26,8 +26,8 @@ class LLM:
 
         # 클라이언트 초기화
         self._initialize_client()
-        
-        print(f" LLM 초기화 완료: {self.provider} ({self.model})")
+
+        print(f"[LLM] 초기화 완료: {self.provider} ({self.model})")
     
     def _detect_provider(self) -> str:
         """
@@ -38,20 +38,20 @@ class LLM:
         try:
             response = requests.get("http://localhost:11434/api/tags", timeout=1)
             if response.status_code == 200:
-                print(" Ollama 감지됨")
+                print("[LLM] Ollama 감지됨")
                 return "ollama"
-        except:
+        except Exception:
             pass
-        
+
         # OpenAI API 키 확인
         if os.getenv("OPENAI_API_KEY"):
-            print(" OpenAI API 키 감지됨")
+            print("[LLM] OpenAI API 키 감지됨")
             return "openai"
-        
+
         # 둘 다 없으면 Mock 모드
-        print("Ollama와 OpenAI가 없어 테스트 모드로 실행합니다")
-        print(" - Ollama 설치: https://ollama.ai")
-        print(" - OpenAI 설정: export OPENAI_API_KEY='your-key'")
+        print("[LLM] Ollama와 OpenAI가 없어 Mock 모드로 실행합니다.")
+        print("       - Ollama 설치: https://ollama.com")
+        print("       - OpenAI 설정: export OPENAI_API_KEY='your-key'")
         return "mock"
     
     def _get_default_model(self) -> str:

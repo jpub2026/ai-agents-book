@@ -1,6 +1,7 @@
-from langgraph.graph import Graph
 from typing import TypedDict, Annotated, Sequence
 import operator
+from langgraph.graph import Graph
+
 
 class MCPNode:
     """LangGraph에서 사용할 수 있는 MCP 노드"""
@@ -69,5 +70,5 @@ def create_mcp_workflow():
     # 실행 순서 정의
     workflow.add_edge("read_files", "query_database")
     workflow.set_entry_point("read_files")
-    
+
     return workflow
